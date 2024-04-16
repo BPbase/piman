@@ -3,6 +3,20 @@
   "description": "Piman is an open-source accessibility UI framework.",
   "author": "Blue Planet Inc.",
   "version": "0.0.1",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "web accessibility",
+    "CSS framework",
+    "UI framework",
+    "Vue",
+    "Nuxt"
+  ],
+  "homepage": "https://bpio.gitbook.io/piman/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BPbase/piman.git"
+  },
   "private": false,
   "type": "module",
   "license": "Apache-2.0",
