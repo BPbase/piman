@@ -1,0 +1,78 @@
+/*************************
+  Html tag
+*************************/
+
+a {
+  color: oklch(var(--link-color));
+  transition: opacity 160ms ease-in;
+  &:visited {
+    color: oklch(var(--link-visited-color));
+  }
+  &:hover {
+    color: oklch(var(--link-hover-color));
+  }
+  &:active {
+    color: oklch(var(--link-active-color));
+  }
+  &:focus-within {
+    outline: none;
+    box-shadow: 0 0 0 3px oklch(var(--color-focus));
+  }
+  &[role="button"] {
+    text-decoration: none;
+    &[target="_blank"] {
+      &:after {
+        display: none;
+      }
+    }
+  }
+  &[target="_blank"] {
+    &:after {
+      content: "\2197";
+    }
+  }
+}
+
+button {
+  &:focus-within {
+    outline: none;
+    box-shadow: inset 0 0 0 3px oklch(var(--color-focus));
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+
+/*************************
+  Single Class
+*************************/
+
+.no-padding {
+  padding: 0!important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+  margin: -1px !important; 
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* .visually-hidden-focusable {
+  &:not(:focus-visible):not(:focus-within) {
+    @include visually-hidden();
+  }
+  &:not(:focus):not(:focus-within) {
+    @media screen and (-ms-high-contrast: active),(-ms-high-contrast: none){
+      @include visually-hidden();
+    }
+  }
+} */
