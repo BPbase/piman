@@ -52,7 +52,7 @@
         <nav class="menu">
           <ul>
             <li>
-              <a href="https://github.com/ya-sai/piman" target="_blank" rel="noreferrer noopener">Github</a>
+              <a href="https://github.com/bpbase/piman" target="_blank" rel="noreferrer noopener">Github</a>
             </li>
             <!-- <li>
               <a href="https://piman.cc/category/document/components/" target="_blank" rel="noreferrer noopener">Docs</a>
