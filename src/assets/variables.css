@@ -264,6 +264,10 @@
   --switch-square-bg: var(--color-white);
   --switch-square-color: var(--color-black);
   --switch-square-checked-color: var(--color-white);
+
+  /* Popover */
+  --popover-content-bg: var(--color-white);
+  --popover-content-color: var(--color-black);
 }
 
 

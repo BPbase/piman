@@ -1,7 +1,7 @@
 <template>
   <div
     ref="refPiSelect"
-    :id=fixId
+    :id="`${fixId}`"
     class="pi-select"
   >
     <pi-button
@@ -131,7 +131,7 @@
                 'option-multi-checked': multiple !== undefined
               }"
               :aria-selected="item.checked"
-              @click="handleClickOption(item, childIndex, index, true)"
+              @click.stop="handleClickOption(item, childIndex, index, true)"
               @keydown.enter.prevent.stop="handleClickOption(item, childIndex, index, true)"
               @keydown.space.prevent.stop="onKeypress"
             >
@@ -151,7 +151,7 @@
             'option-checked--multi': multiple !== undefined
           }"
           :aria-selected="item.checked"
-          @click="handleClickOption(item, index, false)"
+          @click.stop="handleClickOption(item, index, false)"
           @keydown.enter.prevent.stop="handleClickOption(item, index, false)"
           @keydown.space.prevent.stop="onKeypress"
         >
@@ -163,7 +163,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick, getCurrentInstance } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick, getCurrentInstance, inject, Ref } from 'vue'
 import useI18n from "@/locales/useI18n"
 import { generateId } from '@/utils/generateId'
 import useClickOutside from "@/composables/useClickOutside"
@@ -182,7 +182,6 @@ interface ThisData {
   formItem: Vue | null;
   trap: FocusTrap | null;
   toolbar: string;
-  vcoIntercept: null|Vue;
   close(): void;
   open(): void;
   handleEsc(): void;
@@ -224,9 +223,12 @@ const props = defineProps({
   listboxClass: String,
   a11y: Boolean,
 })
-const emit = defineEmits([ 'search', 'update:modelValue', 'blur', 'change', 'toggleSlotItem', 'mountVcoItem' ])
+const emit = defineEmits([ 'search', 'update:modelValue', 'blur', 'change', 'toggleSlotItem' ])
 
 // refs
+const self = getCurrentInstance();
+const parentIntercept = (self.parent as any).provides.openIntercept ? inject('openIntercept') as Ref<{ escEvent: boolean, clickOutSideEvent: boolean }> : undefined;
+
 const refPiSelect = ref(null)
 const refOpenBtn = ref<InstanceType<typeof PiButton> | null>(null);
 const refListbox = ref(null)
@@ -370,7 +372,8 @@ const onKeypress = (evt: KeyboardEvent) => {
 
 // Keyboard Click: ESC 
 const handleEsc = (e: KeyboardEvent) => {
-  if(e.key === 'Escape' || e.keyCode === 27) close()
+  if(e.key !== 'Escape') return;
+  close()
 }
 
 // Close Select Options
@@ -394,9 +397,9 @@ const close = () => {
   if(formItem.value) formItem.value.emit('blur')
 
   document.removeEventListener('keyup', handleEsc)
-
-  if(vcoIntercept.value){
-    vcoIntercept.value.emit('toggleSlotItem', false, this)
+  if(parentIntercept) {
+    parentIntercept.value.escEvent = true;
+    parentIntercept.value.clickOutSideEvent = true;
   }
 }
 
@@ -425,15 +428,14 @@ const open = () => {
   }
 
   document.addEventListener('keyup', handleEsc)
-
-  if(vcoIntercept.value){
-    vcoIntercept.value.emit('toggleSlotItem', true, this)
+  if(parentIntercept) {
+    parentIntercept.value.escEvent = false;
+    parentIntercept.value.clickOutSideEvent = false;
   }
 }
 
 // Form and FormItem match
 const formItem = computed(()=> {
-  const self = getCurrentInstance()
   if(!self) return null
   let parent = self.parent;
   if(!parent) return null
@@ -490,25 +492,6 @@ const optionsLength = computed(() => {
   return opt + groupOpt
 })
 
-// ??
-const vcoIntercept = computed(() => {
-  const instance = getCurrentInstance();
-  if (!instance) {
-    return null;
-  }
-  let parent = instance.parent?.proxy as Vue | null;
-
-  while (parent) {
-    const hasIntercept = parent.$options?.vcoIntercept;
-    if (hasIntercept) {
-      return parent;
-    }
-    parent = parent.$parent?.proxy as Vue | null;
-  }
-
-  return null;
-})
-
 watch(optionsLength, (newValue, oldValue) => {
   if (listboxOpen.value) resetTrap(refSelectSearch.value as unknown as HTMLElement)
 })
@@ -521,10 +504,6 @@ onMounted(() => {
   }
 
   const list: HTMLElement = refListbox.value as unknown as HTMLElement
-
-  if (vcoIntercept.value) {
-    vcoIntercept.value.emit('mountVcoItem', list)
-  }
 })
 
 onBeforeUnmount(() => {
