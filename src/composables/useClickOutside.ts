@@ -5,7 +5,7 @@ import { onMounted, onBeforeUnmount } from 'vue'
 export default function useClickOutside(
   component,
   callback,
-  excludeComponent
+  excludeComponent?: Element
 ) {
   // fail early if any of the required params is missing
   if (!component) {

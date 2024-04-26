@@ -8,6 +8,7 @@ import PiCheckbox from "./Checkbox/PiCheckbox.vue";
 import PiInput from "./Input/PiInput.vue";
 import PiMsg from "./Msg/PiMsg.vue";
 import PiPagination from "./Pagination/PiPagination.vue";
+import PiPopover from "./Popover/PiPopover.vue";
 import PiRadio from "./Radio/PiRadio.vue";
 import PiSelect from "./Select/PiSelect.vue";
 import PiSwitch from "./Switch/PiSwitch.vue";
@@ -25,6 +26,7 @@ export {
   PiInput,
   PiMsg,
   PiPagination,
+  PiPopover,
   PiRadio,
   PiSelect,
   PiSwitch,

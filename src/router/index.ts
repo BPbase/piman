@@ -48,6 +48,11 @@ const routes = [
         component: () => import('@/views/demo/DemoPagination.vue')
       },
       {
+        path: '/popover',
+        name: 'demo-popover',
+        component: () => import('@/views/demo/DemoPopover.vue')
+      },
+      {
         path: '/radio',
         name: 'demo-radio',
         component: () => import('@/views/demo/DemoRadio.vue')
