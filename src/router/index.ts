@@ -71,6 +71,11 @@ const routes = [
         path: '/tabs',
         name: 'demo-tabs',
         component: () => import('@/views/demo/DemoTabs.vue')
+      },
+      {
+        path: '/tooltip',
+        name: 'demo-tooltip',
+        component: () => import('@/views/demo/DemoTooltip.vue')
       }
     ]
   },

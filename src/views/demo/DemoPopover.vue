@@ -74,17 +74,13 @@ import { ref } from 'vue';
 const path = ref([
   { title: '🏠首頁', url: '/'},
   { title: 'Popover'},
-])
+]);
 
 const options = [
   { label: 'label1', value: '1' },
   { label: 'label2', value: '2' },
   { label: 'label3', value: '3' },
-]
+];
 
-const value = ref('1')
-document.addEventListener('keyup', (e) => {
-  if(e.key === 'Escape') {
-  }
-})
+const value = ref('1');
 </script>
