@@ -268,6 +268,10 @@
   /* Popover */
   --popover-content-bg: var(--color-white);
   --popover-content-color: var(--color-black);
+
+  /* Tooltip */
+  --tooltip-content-bg: var(--color-black);
+  --tooltip-content-color: var(--color-white);
 }
 
 
@@ -430,5 +434,10 @@
     --switch-square-bg: var(--color-white);
     --switch-square-color: var(--color-black);
     --switch-square-checked-color: var(--color-black);
+
+    /* Tooltip */
+    --tooltip-content-bg: var(--color-black);
+    --tooltip-content-color: var(--color-white);
+    
   }
 }

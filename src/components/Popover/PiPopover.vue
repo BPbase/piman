@@ -27,7 +27,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, onBeforeUnmount, provide, inject, Ref, getCurrentInstance, watch } from 'vue';
+import { onMounted, ref, onBeforeUnmount, provide, inject, Ref, getCurrentInstance } from 'vue';
 import { generateId } from '@/utils/generateId';
 import useClickOutside from "@/composables/useClickOutside"
 
@@ -47,52 +47,71 @@ const props = defineProps({
     default: false
   }
 })
-const slots = defineSlots();
-const self = getCurrentInstance();
-
+// 如果元件牽涉到esc事件行為或點擊外部事件行為，則提供此事件
 const openIntercept = ref({
   escEvent: true,
   clickOutSideEvent: true
 })
 provide('openIntercept', openIntercept);
+// 取得父元素提供的事件，做為影響esc關閉順序的依據
+const self = getCurrentInstance();
 const parentIntercept = (self.parent as any).provides.openIntercept ? inject('openIntercept') as Ref<{ escEvent: boolean, clickOutSideEvent: boolean }> : undefined;
 
 const refPiPopover = ref(null);
 const ariaExpanded = ref(false);
 const fixId = ref('');
+/**
+ * 點擊事件 - 開啟或關閉 Popover
+ */
 const handleClick = () => {
   ariaExpanded.value ? close() : open();
 }
+/**
+ * 點擊外部事件 - 關閉 Popover
+ */
 const handleClickOutside = () => {
-  const list: HTMLElement = refPiPopover.value as unknown as HTMLElement;
   if(!ariaExpanded.value) return;
+  // 判斷點擊的目標是否在 Popover 內
+  const list: HTMLElement = refPiPopover.value as unknown as HTMLElement;
   if(list.contains(event!.target as Node)) return;
+  // 判斷是否要關閉 Popover，子元件如果也有clickoutside事件會被攔截
   if(!openIntercept.value.clickOutSideEvent) return;
   close();
 }
+/**
+ * Esc 事件 - 關閉 Popover
+ */
 const handleEsc = (e: KeyboardEvent) => {
   if(e.key !== 'Escape') return;
   if(!openIntercept.value.escEvent) return;
   close();
 }
+/**
+ * 開啟 Popover
+ */
 const open = () => {
+  // 先關閉popover，避免重複開啟
   close();
   ariaExpanded.value = true;
+  // 如果父元素有提供事件，則關閉父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = false;
     parentIntercept.value.clickOutSideEvent = false;
   }
+  // 開啟Esc事件
   document.addEventListener('keyup', handleEsc, false);
 }
 const close = () => {
   ariaExpanded.value = false;
+  // 如果父元素有提供事件，則開啟父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = true;
     parentIntercept.value.clickOutSideEvent = true;
   }
+  // 關閉Esc事件
   document.removeEventListener('keyup', handleEsc);
 }
-
+// 點擊外部事件
 useClickOutside(refPiPopover, handleClickOutside);
 onMounted(()=>{
   if(props.open == true) {
@@ -124,23 +143,10 @@ onBeforeUnmount(() => {
   border-radius: var(--radius);
   padding: var(--spacing-m);
   background-color: oklch(var(--popover-content-bg));
-  color: oklch(var(--accordion-content-color));
+  color: oklch(var(--popover-content-color));
   line-height: 1.5rem;
   &[aria-hidden="true"] {
     display: none;
   }
-  /* &::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0.5rem 0.5rem 0.5rem;
-    border-color: transparent transparent #3c3c3c transparent;
-    top: -0.5rem;
-    left: 50%;
-    margin: auto;
-    transform: translate3d(-50%, 0, 0);
-  } */
 }
 </style>

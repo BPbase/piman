@@ -14,6 +14,7 @@ import PiSelect from "./Select/PiSelect.vue";
 import PiSwitch from "./Switch/PiSwitch.vue";
 import PiTabs from "./Tabs/PiTabs.vue";
 import PiTabPanel from "./Tabs/PiTabPanel.vue";
+import PiTooltip from "./Tooltip/PiTooltip.vue";
 
 export {
   PiAccordion,
@@ -31,5 +32,6 @@ export {
   PiSelect,
   PiSwitch,
   PiTabs,
-  PiTabPanel
+  PiTabPanel,
+  PiTooltip,
 }
