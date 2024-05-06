@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
   border-radius: var(--radius);
   padding: var(--spacing-m);
   background-color: oklch(var(--popover-content-bg));
-  color: oklch(var(--color-gray-900));
+  color: oklch(var(--popover-content-color));
   line-height: 1.5rem;
   &[aria-hidden="true"] {
     display: none;
