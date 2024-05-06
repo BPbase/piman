@@ -159,7 +159,8 @@ onBeforeUnmount(() => {
   document.removeEventListener('blur', blur);
 })
 </script>
-<style>
+
+<style scoped>
 .pi-tooltip {
   display: inline-block;
   cursor: pointer;
@@ -176,15 +177,15 @@ onBeforeUnmount(() => {
   box-shadow: 0 12px 18px rgba(0, 0, 0, .15);
   pointer-events: none;
   opacity: 0;
-  &:hover {
-    opacity: 1;
-    pointer-events: inherit;
-  }
   &.pi-tooltip__container--open {
     opacity: 1;
     pointer-events: inherit;
   }
-  &::before {
+  &:hover {
+    opacity: 1;
+    pointer-events: inherit;
+  }
+  &:before {
     content: '';
     position: absolute;
     width: 100%;
@@ -193,7 +194,7 @@ onBeforeUnmount(() => {
     top: -0.5rem;
     left: 50%;
   }
-  &::after {
+  &:after {
     content: '';
     position: absolute;
     width: 0;

@@ -16,7 +16,7 @@
       :id="`popover-content-${fixId}`"
       :aria-labelledby="`popover-btn-${fixId}`"
       :aria-hidden="`${!ariaExpanded}`"
-      role="tooltip"
+      role="region"
       :class="[
         'pi-popover__container',
         nopadding ? 'no-padding' : ''
@@ -128,7 +128,7 @@ onBeforeUnmount(() => {
   if(ariaExpanded.value) close()
 })
 </script>
-<style>
+<style scoped>
 .pi-popover {
   display: inline-block;
   &:has(>.pi-btn) {
@@ -143,7 +143,6 @@ onBeforeUnmount(() => {
   border-radius: var(--radius);
   padding: var(--spacing-m);
   background-color: oklch(var(--popover-content-bg));
-  color: oklch(var(--popover-content-color));
   line-height: 1.5rem;
   &[aria-hidden="true"] {
     display: none;
