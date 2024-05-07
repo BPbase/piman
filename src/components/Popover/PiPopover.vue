@@ -47,13 +47,13 @@ const props = defineProps({
     default: false
   }
 })
-// 如果元件牽涉到esc事件行為或點擊外部事件行為，則提供此事件
+// * 如果元件牽涉到esc事件行為或點擊外部事件行為，則提供此事件
 const openIntercept = ref({
   escEvent: true,
   clickOutSideEvent: true
 })
 provide('openIntercept', openIntercept);
-// 取得父元素提供的事件，做為影響esc關閉順序的依據
+// * 取得父元素提供的事件，做為影響esc關閉順序的依據
 const self = getCurrentInstance();
 const parentIntercept = (self.parent as any).provides.openIntercept ? inject('openIntercept') as Ref<{ escEvent: boolean, clickOutSideEvent: boolean }> : undefined;
 
@@ -61,57 +61,57 @@ const refPiPopover = ref(null);
 const ariaExpanded = ref(false);
 const fixId = ref('');
 /**
- * 點擊事件 - 開啟或關閉 Popover
+ * * 點擊事件 - 開啟或關閉 Popover
  */
 const handleClick = () => {
-  ariaExpanded.value ? close() : open();
+  ariaExpanded.value ? closePopover() : openPopover();
 }
 /**
- * 點擊外部事件 - 關閉 Popover
+ * * 點擊外部事件 - 關閉 Popover
  */
 const handleClickOutside = () => {
   if(!ariaExpanded.value) return;
-  // 判斷點擊的目標是否在 Popover 內
+  // * 判斷點擊的目標是否在 Popover 內
   const list: HTMLElement = refPiPopover.value as unknown as HTMLElement;
   if(list.contains(event!.target as Node)) return;
-  // 判斷是否要關閉 Popover，子元件如果也有clickoutside事件會被攔截
+  // * 判斷是否要關閉 Popover，子元件如果也有clickoutside事件會被攔截
   if(!openIntercept.value.clickOutSideEvent) return;
-  close();
+  closePopover();
 }
 /**
- * Esc 事件 - 關閉 Popover
+ * * Esc 事件 - 關閉 Popover
  */
 const handleEsc = (e: KeyboardEvent) => {
   if(e.key !== 'Escape') return;
   if(!openIntercept.value.escEvent) return;
-  close();
+  closePopover();
 }
 /**
- * 開啟 Popover
+ * * 開啟 Popover
  */
-const open = () => {
-  // 先關閉popover，避免重複開啟
-  close();
+const openPopover = () => {
+  // * 先關閉popover，避免重複開啟
+  closePopover();
   ariaExpanded.value = true;
-  // 如果父元素有提供事件，則關閉父元素事件
+  // * 如果父元素有提供事件，則關閉父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = false;
     parentIntercept.value.clickOutSideEvent = false;
   }
-  // 開啟Esc事件
+  // * 開啟Esc事件
   document.addEventListener('keyup', handleEsc, false);
 }
-const close = () => {
+const closePopover = () => {
   ariaExpanded.value = false;
-  // 如果父元素有提供事件，則開啟父元素事件
+  // * 如果父元素有提供事件，則開啟父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = true;
     parentIntercept.value.clickOutSideEvent = true;
   }
-  // 關閉Esc事件
+  // * 關閉Esc事件
   document.removeEventListener('keyup', handleEsc);
 }
-// 點擊外部事件
+// * 點擊外部事件
 useClickOutside(refPiPopover, handleClickOutside);
 onMounted(()=>{
   if(props.open == true) {
@@ -125,9 +125,10 @@ onMounted(()=>{
   }
 })
 onBeforeUnmount(() => {
-  if(ariaExpanded.value) close()
+  if(ariaExpanded.value) closePopover()
 })
 </script>
+
 <style scoped>
 .pi-popover {
   display: inline-block;
