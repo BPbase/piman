@@ -32,16 +32,16 @@ const props = defineProps({
     type: [String, Number],
     default: ''
   },
-  // 對話框箭頭位置
+  // * 對話框箭頭位置
   arrowPlacement: String as () => 'lr'|'rl'|''
 })
-// 如果元件牽涉到esc事件行為或點擊外部事件行為，則提供此事件
+// * 如果元件牽涉到esc事件行為或點擊外部事件行為，則提供此事件
 const openIntercept = ref({
   escEvent: true,
   clickOutSideEvent: true
 })
 provide('openIntercept', openIntercept);
-// 取得父元素提供的事件，做為影響esc關閉順序的依據
+// * 取得父元素提供的事件，做為影響esc關閉順序的依據
 const self = getCurrentInstance();
 const parentIntercept = (self.parent as any).provides.openIntercept ? inject('openIntercept') as Ref<{ escEvent: boolean, clickOutSideEvent: boolean }> : undefined;
 
@@ -52,7 +52,7 @@ const isFocus = ref(false);
 const fixId = ref('');
 const arrowsPosition = ref<'lr'|'rl'|''>('');
 /**
- * Esc 事件 - 關閉 Tooltip
+ * * Esc 事件 - 關閉 Tooltip
  */
 const handleEsc = (e: KeyboardEvent) => {
   if(e.key !== 'Escape') return;
@@ -61,7 +61,7 @@ const handleEsc = (e: KeyboardEvent) => {
     isFocus.value = true;
     open();
   }
-  // 目前focus元素 = Tooltip 內容 或 Tooltip 內容的子元素，會取消焦點
+  // * 目前focus元素 = Tooltip 內容 或 Tooltip 內容的子元素，會取消焦點
   const focusedElement = document.activeElement;
   if(refPiTooltip.value.contains(focusedElement)) {
     isFocus.value = false;
@@ -70,7 +70,7 @@ const handleEsc = (e: KeyboardEvent) => {
   close();
 }
 /**
- * Focus 事件 - 開啟 Tooltip
+ * * Focus 事件 - 開啟 Tooltip
  */
 const focus = (e: Event) => {
   if(refPiTooltip.value.contains(e.target)) {
@@ -79,7 +79,7 @@ const focus = (e: Event) => {
   }
 }
 /**
- * Blur 事件 - 關閉 Tooltip
+ * * Blur 事件 - 關閉 Tooltip
  */
 const blur = (e: Event) => {
   if(refPiTooltip.value.contains(e.target)) {
@@ -88,18 +88,18 @@ const blur = (e: Event) => {
   }
 }
 /**
- * 開啟 Tooltip
+ * * 開啟 Tooltip
  */
 const open = () => {
-  // 先關閉tooltip，避免重複開啟
+  // * 先關閉tooltip，避免重複開啟
   close();
   const box = refPiTooltipBox.value;
-  // 取得Tooltip位置
+  // * 取得Tooltip位置
   const tooltip = refPiTooltip.value.getBoundingClientRect();
-  // 加入Tooltip內容，選擇加入到body，避免被父元素影響
+  // * 加入Tooltip內容，選擇加入到body，避免被父元素影響
   document.body.appendChild(box);
   box.style.top = `${window.scrollY + tooltip.top + tooltip.height}px`;
-  // Tooltip內容 是否會超出邊界，超出則調整位置
+  // * Tooltip內容 是否會超出邊界，超出則調整位置
   if(tooltip.left - (box.offsetWidth / 2) < 0 || props.arrowPlacement === 'lr'){
     box.style.left = `${tooltip.left}px`;
     arrowsPosition.value = 'lr';
@@ -112,26 +112,26 @@ const open = () => {
     arrowsPosition.value = '';
   }
   tipboxOpen.value = true;
-  // 開啟Esc事件
+  // * 開啟Esc事件
   document.addEventListener('keyup', handleEsc, false);
-  // 如果父元素有提供事件，則關閉父元素事件
+  // * 如果父元素有提供事件，則關閉父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = false;
     parentIntercept.value.clickOutSideEvent = false;
   }
 }
 const close = () => {
-  // 非開啟狀態不處理
+  // * 非開啟狀態不處理
   if(!tipboxOpen.value) return;
-  // 當焦點在Tooltip內容時，不關閉
+  // * 當焦點在Tooltip內容時，不關閉
   if(isFocus.value) return;
   
   setTimeout(() => {
     tipboxOpen.value = false;
   }, 300);
-  // 移除Esc事件
+  // * 移除Esc事件
   document.removeEventListener('keyup', handleEsc);
-  // 如果父元素有提供事件，則恢復父元素事件
+  // * 如果父元素有提供事件，則恢復父元素事件
   if(parentIntercept) {
     parentIntercept.value.escEvent = true;
     parentIntercept.value.clickOutSideEvent = true;
@@ -145,22 +145,21 @@ onMounted(()=>{
   else {
     fixId.value = String(generateId());
   }
-  // 加入事件
+  // * 加入事件
   refPiTooltip.value.addEventListener('mouseover', open);
   refPiTooltip.value.addEventListener('mouseout', close);
   document.addEventListener('focus', focus, true);
   document.addEventListener('blur', blur, true);
 })
 onBeforeUnmount(() => {
-  // 移除事件
+  // * 移除事件
   refPiTooltip.value.removeEventListener('mouseover', open);
   refPiTooltip.value.removeEventListener('mouseout', close);
   document.removeEventListener('focus', focus);
   document.removeEventListener('blur', blur);
 })
 </script>
-
-<style scoped>
+<style>
 .pi-tooltip {
   display: inline-block;
   cursor: pointer;
@@ -177,15 +176,15 @@ onBeforeUnmount(() => {
   box-shadow: 0 12px 18px rgba(0, 0, 0, .15);
   pointer-events: none;
   opacity: 0;
-  &.pi-tooltip__container--open {
-    opacity: 1;
-    pointer-events: inherit;
-  }
   &:hover {
     opacity: 1;
     pointer-events: inherit;
   }
-  &:before {
+  &.pi-tooltip__container--open {
+    opacity: 1;
+    pointer-events: inherit;
+  }
+  &::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -194,7 +193,7 @@ onBeforeUnmount(() => {
     top: -0.5rem;
     left: 50%;
   }
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     width: 0;
