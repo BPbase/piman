@@ -38,19 +38,19 @@ defineProps({
 <style scoped>
 .pi-btn {
   cursor: pointer;
-  padding: var(--spacing-s) var(--spacing-m);
-  color: oklch(var(--button-default-color));
-  background-color: oklch(var(--button-default-bg));
+  padding: var(--spacing-s, 0.75rem) var(--spacing-m, 1rem);
+  color: oklch(var(--button-default-color, 13.98% 0 0));
+  background-color: oklch(var(--button-default-bg, 99.4% 0 0));
   font-size: 1rem;
   line-height: 1.5;
-  border: 1px solid oklch(var(--color-border));
-  border-radius: var(--radius);
+  border: 1px solid oklch(var(--color-border, 78.94% 0 0));
+  border-radius: var(--radius, 0.25rem);
   transition: background-color 160ms ease-in;
   &:hover {
-    background-color: oklch(var(--button-default-hover-bg));
+    background-color: oklch(var(--button-default-hover-bg, 94.66% 0 0));
   }
   &:active {
-    background-color: oklch(var(--button-default-active-bg));
+    background-color: oklch(var(--button-default-active-bg, 86.89% 0 0));
   }
   &:disabled {
     cursor: not-allowed;
@@ -58,7 +58,7 @@ defineProps({
     opacity: 0.4;
   }
   &.pi-btn--small {
-    padding: var(--spacing-xxs) var(--spacing-xs);
+    padding: var(--spacing-xxs, 0.25rem) var(--spacing-xs, 0.5rem);
     font-size: 1rem;
     & .pi-btn-loading {
       vertical-align: baseline;
@@ -71,13 +71,13 @@ defineProps({
     }
   }
   &.pi-btn--large {
-    padding: var(--spacing-m) var(--spacing-xl);
+    padding: var(--spacing-m, 1rem) var(--spacing-xl, 2rem);
     font-size: 1.25rem;
-    & .pi-btn-loading {
+    .pi-btn-loading {
       vertical-align: baseline;
       width: 1.25rem;
       height: 1.25rem;
-      & span {
+      span {
         width: 1.25rem;
         height: 1.25rem;
       }
@@ -116,13 +116,13 @@ defineProps({
           linear-gradient(to right, oklch(var(--color-primary-500) / 0.4) 0.125rem,  oklch(var(--color-primary-600)) 0.125rem);
       }
     }
-    & .pi-btn-loading {
+    .pi-btn-loading {
       & span {
         border-color: oklch(var(--button-flat-color)) transparent transparent transparent;
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--button-flat-color));
     }
   }
@@ -169,13 +169,13 @@ defineProps({
           );
       }
     }
-    & .pi-btn-loading {
+    .pi-btn-loading {
       & span {
         border-color: oklch(var(--button-flat-color)) transparent transparent transparent;
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--button-flat-color));
     }
   }
@@ -210,13 +210,13 @@ defineProps({
           radial-gradient( oklch(var(--color-warning-500)) 0.1rem, oklch(var(--color-warning-600)) 0.1rem);
       }
     }
-    & .pi-btn-loading {
+    .pi-btn-loading {
       & span {
         border-color: oklch(var(--button-flat-color)) transparent transparent transparent;
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--button-flat-color));
     }
   }
@@ -257,20 +257,20 @@ defineProps({
           linear-gradient(315deg, oklch(var(--color-danger-500) / 0.6) 25%, oklch(var(--color-danger-600)) 25%);
       }
     }
-    & .pi-btn-loading {
+    .pi-btn-loading {
       & span {
         border-color: oklch(var(--button-flat-color)) transparent transparent transparent;
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--button-flat-color));
     }
   }
   &.pi-btn--primary-ghost {
     color: oklch(var(--color-primary-600));
     background: oklch(var(--button-ghost-bg));
-    border-color:oklch(var(--color-primary-600));
+    border-color: oklch(var(--color-primary-600));
     &:hover {
       background-color: oklch(var(--color-primary-100));
     }
@@ -294,8 +294,8 @@ defineProps({
           linear-gradient(to right, oklch(var(--color-primary-100) / 0.4) 0.125rem,  oklch(var(--color-primary-200)) 0.125rem);
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--color-primary-600));
     }
   }
@@ -339,8 +339,8 @@ defineProps({
           );
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--color-success-600));
     }
   }
@@ -371,8 +371,8 @@ defineProps({
           radial-gradient( oklch(var(--color-warning-100)) 0.1rem, oklch(var(--color-warning-200)) 0.1rem);
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--color-warning-600));
     }
   }
@@ -410,27 +410,27 @@ defineProps({
           linear-gradient(315deg, oklch(var(--color-danger-100) / 0.3) 25%, oklch(var(--color-danger-200)) 25%);
       }
     }
-    & .pi-select-placeholder,
-    & .pi-select-clear-btn { 
+    .pi-select-placeholder,
+    .pi-select-clear-btn { 
       color: oklch(var(--color-danger-600));
     }
   }
   &:has(~.pi-btn) {
-    margin-right: var(--spacing-m);
-    margin-top: var(--spacing-xs);
-    margin-bottom: var(--spacing-xs);
+    margin-right: var(--spacing-m, 1rem);
+    margin-top: var(--spacing-xs, 0.5rem);
+    margin-bottom: var(--spacing-xs, 0.5rem);
   }
 }
 
 :deep(.pi-badge) {
   position: relative;
   top: -1px;
-  padding: var(--spacing-xxxs) var(--spacing-xxs);
-  margin-left: var(--spacing-xxs);
+  padding: var(--spacing-xxxs, 0.125rem) var(--spacing-xxs, 0.25rem);
+  margin-left: var(--spacing-xxs, 0.25rem);
   line-height: 1.125;
   border-radius: 1rem;
-  background-color: oklch(var(--color-badge-bg));
-  color: oklch(var(--color-badge-color));
+  background-color: oklch(var(--color-badge-bg, 86.98% 0.128 81.2));
+  color: oklch(var(--color-badge-color, 86.98% 0.128 81.2));
   font-size: 0.75rem;
 }
 
@@ -441,15 +441,15 @@ defineProps({
   position: relative;
   width: 1.25rem;
   height: 1.25rem;
-  & span {
+  span {
     box-sizing: border-box;
     display: block;
     position: absolute;
     width: 1rem;
     height: 1rem;
     margin: 0.125rem;
-    border: 0.125rem solid oklch(var(--color-border));
-    border-color: oklch(var(--color-border)) transparent transparent transparent;
+    border: 0.125rem solid oklch(var(--color-border,  78.94% 0 0));
+    border-color: oklch(var(--color-border,  78.94% 0 0)) transparent transparent transparent;
     border-radius: 50%;
     animation: btn-loading-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     &:nth-child(1) {

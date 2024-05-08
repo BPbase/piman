@@ -9,10 +9,10 @@
 
 <style scoped>
 .pi-accordion {
-  & .pi-accordion {
-    border-top: 1px solid oklch(var(--color-border));
-    border-right: 1px solid oklch(var(--color-border));
-    border-left: 1px solid oklch(var(--color-border));
+  .pi-accordion {
+    border-top: 1px solid oklch(var(--color-border, 78.94% 0 0));
+    border-right: 1px solid oklch(var(--color-border, 78.94% 0 0));
+    border-left: 1px solid oklch(var(--color-border, 78.94% 0 0));
   }
 }
 </style>

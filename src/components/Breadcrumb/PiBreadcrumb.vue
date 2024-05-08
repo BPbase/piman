@@ -30,7 +30,7 @@ onMounted(()=>{
 
 <style scoped>
 .pi-breadcrumb {
-  & ol {
+  ol {
     display: flex;
     flex-direction: row;
     list-style-type: none;

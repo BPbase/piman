@@ -694,7 +694,7 @@ onBeforeUnmount(() => {
         transition: opacity 120ms ease-in;
       }
       &:hover {
-        background-color: oklch(var(--color-primary-bg));
+        background-color: oklch(var(--color-primary-50));
         color: oklch(var(--color-primary-600));
       }
       &:active,

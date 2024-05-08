@@ -24,11 +24,11 @@ defineProps({
 
 <style scoped>
 .pi-breadcrumb__item {
-  color: oklch(var(--breadcrumb-color));
+  color: oklch(var(--breadcrumb-color, 44.64% 0 0));
   &:not(:last-of-type) {
     &:after {
       content: '/';
-      margin: 0 var(--spacing-xs);
+      margin: 0 var(--spacing-xs, 0.5rem);
     }
   }
 }
