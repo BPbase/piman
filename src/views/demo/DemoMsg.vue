@@ -15,6 +15,10 @@
       <h2>Message</h2>
       <section>
         Msg Content
+        <pi-button theme="primary" @click="callMsg('primary', 'hello I\'m primary')">Primary</pi-button>
+        <pi-button theme="success" @click="callMsg('success', 'hello I\'m success')">Success</pi-button>
+        <pi-button theme="warning">Warning</pi-button>
+        <pi-button theme="danger">Danger</pi-button>
       </section>
     </div>
   </div>
@@ -23,9 +27,17 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-
+import PiMsg from '@/components/Msg/PiMsg';
 const path = ref([
   { title: '🏠首頁', url: '/'},
-  { title: 'Pagination'},
+  { title: 'Msg'},
 ])
+const callMsg = (type: "primary" | "success" | "warning" | "danger", msg: string) => {
+  PiMsg({
+    msg: msg,
+    theme: type,
+    duration: 3000
+  })
+}
+
 </script>
