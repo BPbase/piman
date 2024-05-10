@@ -36,7 +36,10 @@ const callMsg = (type: "primary" | "success" | "warning" | "danger", msg: string
   PiMsg({
     msg: msg,
     theme: type,
-    duration: 3000
+    duration: 3000,
+    onClose: () => {
+      console.log('msg closed')
+    }
   })
 }
 

@@ -48,7 +48,6 @@
 import { onMounted, ref, toRefs, watch } from 'vue'
 import { defaultMsgOpt } from "./PiMsg"
   const id = ref('bpa-msg-' + Date.now())
-  // console.log(defaultMsgOpt)
   const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(defaultMsgOpt)
   const onClose = defaultMsgOpt.onClose
   const currentTimer = ref<any>(0)
