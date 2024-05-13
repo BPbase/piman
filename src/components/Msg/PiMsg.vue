@@ -21,8 +21,8 @@
             class="accesskey"
             @focus="clearTimer"
             @blur="startTimer"
+            :title="t('msg.area')"
           >
-            <!-- :title="t('msg.area')" -->
             :::
           </a>
         </div>
@@ -32,10 +32,9 @@
           @focus="clearTimer"
           class="close-msg"
         >
-          <span aria-hidden="true">✖ close</span>
+          <span aria-hidden="true">✖</span>
           <span class="visually-hidden">
-            <!-- {{ t('msg.close') }} -->
-            Close
+            {{ t('msg.close') }}
           </span>
         </button>
       </div>
@@ -45,42 +44,44 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
+import useI18n from '@/locales/useI18n';
 import { defaultMsgOpt } from "./PiMsg"
-  const id = ref('bpa-msg-' + Date.now())
-  const localOptions = reactive(defaultMsgOpt)
-  const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
-  const onClose = defaultMsgOpt.onClose
-  const currentTimer = ref<any>(0)
-  // watch closed
-  watch(closed , (newVal) => {
-    if (newVal) {
-      visible.value = false
-    }
-  })
-  const close = () => {
-    closed.value = true
-    if (typeof onClose === 'function') {
-      onClose(this)
-      clearTimer(currentTimer.value)
-      closed.value = false
-    }
+const { t } = useI18n()
+const id = ref('bpa-msg-' + Date.now())
+const localOptions = reactive(defaultMsgOpt)
+const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
+const onClose = defaultMsgOpt.onClose
+const currentTimer = ref<any>(0)
+// watch closed
+watch(closed , (newVal) => {
+  if (newVal) {
+    visible.value = false
   }
-  const clearTimer = (timer) => {
-    clearTimeout(timer)
-  }
-  const startTimer = () => {
-    if (defaultMsgOpt.duration > 0) {
-      currentTimer.value = setTimeout(() => {
-        if (!closed.value) close()
-        clearTimer(currentTimer.value)
-      }, defaultMsgOpt.duration)
-    }
-  }
-  onMounted(() => {
-    visible.value = true
+})
+const close = () => {
+  closed.value = true
+  if (typeof onClose === 'function') {
+    onClose(this)
+    clearTimer(currentTimer.value)
     closed.value = false
-    startTimer()
-  })
+  }
+}
+const clearTimer = (timer) => {
+  clearTimeout(timer)
+}
+const startTimer = () => {
+  if (defaultMsgOpt.duration > 0) {
+    currentTimer.value = setTimeout(() => {
+      if (!closed.value) close()
+      clearTimer(currentTimer.value)
+    }, defaultMsgOpt.duration)
+  }
+}
+onMounted(() => {
+  visible.value = true
+  closed.value = false
+  startTimer()
+})
 </script>
 <style>
 .bpa-msg {
