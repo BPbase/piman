@@ -1,5 +1,5 @@
 <template>
-  <transition @after-leave="handleAfterLeave" name="fade">
+  <transition name="fade">
     <div
       v-show="visible"
       role="alert"
@@ -30,7 +30,6 @@
         <button
           @click="close"
           @focus="clearTimer"
-          
           class="close-msg"
         >
           <span aria-hidden="true">✖ close</span>
@@ -45,10 +44,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, toRefs, watch } from 'vue'
+import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { defaultMsgOpt } from "./PiMsg"
   const id = ref('bpa-msg-' + Date.now())
-  const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(defaultMsgOpt)
+  const localOptions = reactive(defaultMsgOpt)
+  const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
   const onClose = defaultMsgOpt.onClose
   const currentTimer = ref<any>(0)
   // watch closed
@@ -57,10 +57,6 @@ import { defaultMsgOpt } from "./PiMsg"
       visible.value = false
     }
   })
-  const handleAfterLeave = () => {
-    // this.$destroy();
-    // this.$el.parentNode.removeChild(this.$el);
-  }
   const close = () => {
     closed.value = true
     if (typeof onClose === 'function') {
@@ -88,6 +84,7 @@ import { defaultMsgOpt } from "./PiMsg"
 </script>
 <style>
 .bpa-msg {
+  width: 180px;
   position: fixed;
   top: 1rem;
   right: 1rem;

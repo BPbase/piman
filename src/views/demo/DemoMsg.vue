@@ -17,8 +17,8 @@
         Msg Content
         <pi-button theme="primary" @click="callMsg('primary', 'hello I\'m primary')">Primary</pi-button>
         <pi-button theme="success" @click="callMsg('success', 'hello I\'m success')">Success</pi-button>
-        <pi-button theme="warning">Warning</pi-button>
-        <pi-button theme="danger">Danger</pi-button>
+        <pi-button theme="warning" @click="callMsg('warning', 'hello I\'m warning')">Warning</pi-button>
+        <pi-button theme="danger" @click="callMsg('danger', 'hello I\'m danger')">Danger</pi-button>
       </section>
     </div>
   </div>
