@@ -28,13 +28,14 @@
 
 
 <script lang="ts" setup>
+import type { themeType } from '@/components/Msg/PiMsg';
 import { inject, ref } from 'vue';
 const path = ref([
   { title: '🏠首頁', url: '/'},
   { title: 'Msg'},
 ])
 const myMsg: Function = inject('PiMsg');
-const callMsg = (type: "" | "primary" | "success" | "warning" | "danger", msg: string) => {
+const callMsg = (type: themeType, msg: string) => {
   myMsg({
     msg: msg,
     theme: type,

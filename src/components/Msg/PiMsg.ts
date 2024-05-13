@@ -1,12 +1,14 @@
 import { createApp } from 'vue'
 import PiMsg from './PiMsg.vue'
+
+export type themeType = "" | "primary"|"success"|"warning"|"danger"
 interface MsgOption {
   visible?: boolean
   closed?: boolean
   prefix?: string
   dangerHTML?: boolean
   msg: string
-  theme?: "primary"|"success"|"warning"|"danger"
+  theme?: themeType
   duration?: number
   timer?: number
   onClose?: null | any
