@@ -10,8 +10,10 @@ interface MsgOption {
   duration?: number
   timer?: number
   onClose?: null | any
+  position?: string
   vOffset?: number
-  hOffset?: number
+  hOffset?: string
+  width?: string
   id?: string
 }
 
@@ -29,7 +31,10 @@ export const defaultMsgOpt: MsgOption = {
   timer: undefined,
   closed: false,
   onClose: null,
+  position: 'right',
+  hOffset: '1rem',
   vOffset: 80,
+  width: '180px',
   id: ''
 }
 
@@ -60,9 +65,24 @@ const Msg = function (options: MsgOption | string) {
     ...options,
   })
   app.vm = app.mount(document.createElement('div'))
-  //
+  // append to body
   const tmp = document.body.appendChild(app.vm.$el)
   const getElement = document.getElementById(tmp.id)
+  // append width
+  if(defaultMsgOpt.width) getElement.style.width = defaultMsgOpt.width
+  // append position
+  switch(defaultMsgOpt.position) {
+    case 'left':
+      getElement.style.left = defaultMsgOpt.hOffset
+      break
+    case 'center':
+      getElement.style.left = '50%'
+      getElement.style.transform = 'translateX(-50%)'
+      break
+    case 'right':
+      getElement.style.right = defaultMsgOpt.hOffset
+      break
+  }
   if(showOrder < 1) showOrder = 1
   getElement.style.top = (defaultMsgOpt.vOffset)*(showOrder++) + 'px'
 

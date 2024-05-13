@@ -3,10 +3,9 @@
     <div
       v-show="visible"
       role="alert"
-      :id="id"
       :class="[
         'bpa-msg',
-        theme ? `bpa-msg--${ theme }` : ''
+        theme ? `bpa-msg--${ theme }` : 'bpa-msg--default'
       ]"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
@@ -26,17 +25,19 @@
             :::
           </a>
         </div>
-        <div class="msg-content">{{ msg }}</div>
-        <button
-          @click="close"
-          @focus="clearTimer"
-          class="close-msg"
-        >
-          <span aria-hidden="true">✖</span>
-          <span class="visually-hidden">
-            {{ t('msg.close') }}
-          </span>
-        </button>
+        <div class="msg-content">
+          <span class="msg-inner">{{ msg }}</span>
+          <button
+            @click="close"
+            @focus="clearTimer"
+            class="msg-close"
+          >
+            <span aria-hidden="true">✖</span>
+            <span class="visually-hidden">
+              {{ t('msg.close') }}
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </transition>
@@ -47,7 +48,6 @@ import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import useI18n from '@/locales/useI18n';
 import { defaultMsgOpt } from "./PiMsg"
 const { t } = useI18n()
-const id = ref('bpa-msg-' + Date.now())
 const localOptions = reactive(defaultMsgOpt)
 const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
 const onClose = defaultMsgOpt.onClose
@@ -61,7 +61,7 @@ watch(closed , (newVal) => {
 const close = () => {
   closed.value = true
   if (typeof onClose === 'function') {
-    onClose(this)
+    onClose()
     clearTimer(currentTimer.value)
     closed.value = false
   }
@@ -85,10 +85,8 @@ onMounted(() => {
 </script>
 <style>
 .bpa-msg {
-  width: 180px;
   position: fixed;
   top: 1rem;
-  right: 1rem;
   z-index: 9999;
   overflow: auto;
   padding: 1rem 1rem 1rem 2rem;
@@ -104,6 +102,11 @@ onMounted(() => {
     top: 0.25rem;
     left: 0.25rem;
     color: oklch(var(--color-black));
+  }
+  .msg-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 .bpa-msg--primary {
@@ -125,5 +128,10 @@ onMounted(() => {
   color: oklch(var(--color-white));
   background-color: oklch(var(--color-danger-500));
   border-color: oklch(var(--color-danger-500));
+}
+.bpa-msg--default {
+  color: oklch(var(--color-black));
+  background-color: oklch(var(--color-white));
+  border-color: oklch(var(--color-border));
 }
 </style>

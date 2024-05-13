@@ -15,6 +15,8 @@
       <h2>Message</h2>
       <section>
         Msg Content
+        <!-- default -->
+        <pi-button @click="callMsg('', 'hello I\'m default')">Default</pi-button>
         <pi-button theme="primary" @click="callMsg('primary', 'hello I\'m primary')">Primary</pi-button>
         <pi-button theme="success" @click="callMsg('success', 'hello I\'m success')">Success</pi-button>
         <pi-button theme="warning" @click="callMsg('warning', 'hello I\'m warning')">Warning</pi-button>
@@ -32,7 +34,7 @@ const path = ref([
   { title: 'Msg'},
 ])
 const myMsg: Function = inject('PiMsg');
-const callMsg = (type: "primary" | "success" | "warning" | "danger", msg: string) => {
+const callMsg = (type: "" | "primary" | "success" | "warning" | "danger", msg: string) => {
   myMsg({
     msg: msg,
     theme: type,
