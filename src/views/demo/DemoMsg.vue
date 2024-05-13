@@ -15,6 +15,12 @@
       <h2>Message</h2>
       <section>
         Msg Content
+        <!-- default -->
+        <pi-button @click="callMsg('', 'hello I\'m default')">Default</pi-button>
+        <pi-button theme="primary" @click="callMsg('primary', 'hello I\'m primary')">Primary</pi-button>
+        <pi-button theme="success" @click="callMsg('success', 'hello I\'m success')">Success</pi-button>
+        <pi-button theme="warning" @click="callMsg('warning', 'hello I\'m warning')">Warning</pi-button>
+        <pi-button theme="danger" @click="callMsg('danger', 'hello I\'m danger')">Danger</pi-button>
       </section>
     </div>
   </div>
@@ -22,10 +28,22 @@
 
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-
+import type { themeType } from '@/components/Msg/PiMsg';
+import { inject, ref } from 'vue';
 const path = ref([
   { title: '🏠首頁', url: '/'},
-  { title: 'Pagination'},
+  { title: 'Msg'},
 ])
+const myMsg: Function = inject('PiMsg');
+const callMsg = (type: themeType, msg: string) => {
+  myMsg({
+    msg: msg,
+    theme: type,
+    duration: 3000,
+    onClose: () => {
+      console.log('msg closed')
+    }
+  })
+}
+
 </script>
