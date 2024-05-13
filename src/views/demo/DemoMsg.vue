@@ -26,14 +26,14 @@
 
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import PiMsg from '@/components/Msg/PiMsg';
+import { inject, ref } from 'vue';
 const path = ref([
   { title: '🏠首頁', url: '/'},
   { title: 'Msg'},
 ])
+const myMsg: Function = inject('PiMsg');
 const callMsg = (type: "primary" | "success" | "warning" | "danger", msg: string) => {
-  PiMsg({
+  myMsg({
     msg: msg,
     theme: type,
     duration: 3000,
