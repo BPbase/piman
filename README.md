@@ -20,15 +20,15 @@
 | Checkbox | `PiCheckbox.vue` | ✅ |
 | Dropdown | `BpaDropdown.vue` |  |
 | Form | `BpaForm.vue`、`BpaFormItem.vue`、套件[async-validator](https://github.com/yiminghe/async-validator) |  |
-| Input | `BpaInput.vue` | ✅ |
-| Msg | `BpaMsg.vue`、`BpaMsg.ts` |  |
-| Pagination | `BpaPagination.vue` | ✅ |
-| Popover |`BpaPopover.vue`||
+| Input | `PiInput.vue` | ✅ |
+| Msg | `PiMsg.vue`、`PiMsg.ts` | ✅ |
+| Pagination | `PiPagination.vue` | ✅ |
+| Popover |`PiPopover.vue`| ✅ |
 | Radio |`PiRadio.vue`| ✅ |
-| Select |`BpaSelect.vue`| ✅ |
+| Select |`PiSelect.vue`| ✅ |
 | Switch |`PiSwitch.vue`| ✅ |
 | Tabs | `PiTabPanel.vue`、`PiTabs.vue` | ✅ |
-| Tooltip | `BpaTooltip.vue` |
+| Tooltip | `PiTooltip.vue` | ✅ |
 | Tree | `BpaTree.vue`、`BpaTreeNode.vue` |  |
 
 ## 🖥 瀏覽器支援
