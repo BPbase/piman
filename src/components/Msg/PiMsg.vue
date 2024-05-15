@@ -49,7 +49,7 @@ import useI18n from '@/locales/useI18n';
 import { defaultMsgOpt } from "./PiMsg"
 const { t } = useI18n()
 const localOptions = reactive(defaultMsgOpt)
-const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
+const { dangerHTML, prefix, msg, theme, closed, visible, autoClose } = toRefs(localOptions)
 const onClose = defaultMsgOpt.onClose
 const currentTimer = ref<any>(0)
 // watch closed
@@ -70,7 +70,7 @@ const clearTimer = (timer) => {
   clearTimeout(timer)
 }
 const startTimer = () => {
-  if (defaultMsgOpt.duration > 0) {
+  if (defaultMsgOpt.duration > 0 && autoClose.value) {
     currentTimer.value = setTimeout(() => {
       if (!closed.value) close()
       clearTimer(currentTimer.value)
