@@ -17,6 +17,7 @@ interface MsgOption {
   hOffset?: string
   width?: string
   id?: string
+  autoClose?: boolean
 }
 
 let instance: any
@@ -37,7 +38,8 @@ export const defaultMsgOpt: MsgOption = {
   hOffset: '1rem',
   vOffset: 80,
   width: '180px',
-  id: ''
+  id: '',
+  autoClose: true
 }
 
 const Msg = function (options: MsgOption | string) {
@@ -49,7 +51,7 @@ const Msg = function (options: MsgOption | string) {
     }
   } else {
     const userOnClose = options.onClose
-    const id = 'bpa-msg_' + seed++
+    const id = 'pi-msg_' + seed++
     options.id = id
     options.closed = false
 
@@ -102,7 +104,7 @@ const Msg = function (options: MsgOption | string) {
     } else {
       opt = { ...defaultMsgOpt, ...options }
     }
-    opt.theme = type as ('success'|'warning'|'primary'|'danger')
+    opt.theme = type as themeType
     return Msg(opt)
   }
 })
@@ -113,7 +115,7 @@ Msg.close = function(id: string, userOnClose: any) {
   // destroy el
   if(el) el.parentNode?.removeChild(el)
   // get every element
-  const allMsg = document.querySelectorAll('.bpa-msg')
+  const allMsg = document.querySelectorAll('.pi-msg')
   // minus top of every element
   allMsg.forEach((item: any, index) => {
     item.style.top = (defaultMsgOpt.vOffset)*(index+1) + 'px'

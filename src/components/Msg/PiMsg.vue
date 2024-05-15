@@ -4,20 +4,20 @@
       v-show="visible"
       role="alert"
       :class="[
-        'bpa-msg',
-        theme ? `bpa-msg--${ theme }` : 'bpa-msg--default'
+        'pi-msg',
+        theme ? `pi-msg--${ theme }` : 'pi-msg--default'
       ]"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
-      <div class="bpa-msg-wrap">
+      <div class="pi-msg-wrap">
         <div>
           <div v-if="dangerHTML === false" class="prefix">{{ prefix }}</div>
           <div v-else  v-html="prefix" class="prefix"></div>
           <a
             href="javascript:;"
             accesskey="M"
-            class="accesskey"
+            :class="theme !== '' ? 'accesskey' : 'accesskey-default'"
             @focus="clearTimer"
             @blur="startTimer"
             :title="t('msg.area')"
@@ -49,7 +49,7 @@ import useI18n from '@/locales/useI18n';
 import { defaultMsgOpt } from "./PiMsg"
 const { t } = useI18n()
 const localOptions = reactive(defaultMsgOpt)
-const { dangerHTML, prefix, msg, theme, closed, visible } = toRefs(localOptions)
+const { dangerHTML, prefix, msg, theme, closed, visible, autoClose } = toRefs(localOptions)
 const onClose = defaultMsgOpt.onClose
 const currentTimer = ref<any>(0)
 // watch closed
@@ -70,7 +70,7 @@ const clearTimer = (timer) => {
   clearTimeout(timer)
 }
 const startTimer = () => {
-  if (defaultMsgOpt.duration > 0) {
+  if (defaultMsgOpt.duration > 0 && autoClose.value) {
     currentTimer.value = setTimeout(() => {
       if (!closed.value) close()
       clearTimer(currentTimer.value)
@@ -84,7 +84,7 @@ onMounted(() => {
 })
 </script>
 <style>
-.bpa-msg {
+.pi-msg {
   position: fixed;
   top: 1rem;
   z-index: 9999;
@@ -101,6 +101,12 @@ onMounted(() => {
     position: absolute;
     top: 0.25rem;
     left: 0.25rem;
+    color: oklch(var(--color-white));
+  }
+  .accesskey-default {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
     color: oklch(var(--color-black));
   }
   .msg-content {
@@ -109,27 +115,27 @@ onMounted(() => {
     justify-content: space-between;
   }
 }
-.bpa-msg--primary {
+.pi-msg--primary {
   color: oklch(var(--color-white));
   background-color: oklch(var(--color-primary-500));
   border-color: oklch(var(--color-primary-500));
 }
-.bpa-msg--success {
+.pi-msg--success {
   color: oklch(var(--color-white));
   background-color: oklch(var(--color-success-500));
   border-color: oklch(var(--color-success-500));
 }
-.bpa-msg--warning {
+.pi-msg--warning {
   color: oklch(var(--color-white));
   background-color: oklch(var(--color-warning-500));
   border-color: oklch(var(--color-warning-500));
 }
-.bpa-msg--danger {
+.pi-msg--danger {
   color: oklch(var(--color-white));
   background-color: oklch(var(--color-danger-500));
   border-color: oklch(var(--color-danger-500));
 }
-.bpa-msg--default {
+.pi-msg--default {
   color: oklch(var(--color-black));
   background-color: oklch(var(--color-white));
   border-color: oklch(var(--color-border));

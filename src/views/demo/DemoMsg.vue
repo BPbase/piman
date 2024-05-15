@@ -40,6 +40,7 @@ const callMsg = (type: themeType, msg: string) => {
     msg: msg,
     theme: type,
     duration: 3000,
+    autoClose: false,
     onClose: () => {
       console.log('msg closed')
     }
