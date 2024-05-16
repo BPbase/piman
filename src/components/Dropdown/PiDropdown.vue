@@ -109,6 +109,9 @@ const openListbox = () => {
     refPiDropdownList.value.style.position = 'fixed'
     refPiDropdownList.value.style.width = coords.width + 'px'
   }
+  if (props.optionWidth) {
+    refPiDropdownList.value.style.width = props.optionWidth
+  }
 }
 const handleClickSelect = () => {
   if (listboxOpen.value) listboxOpen.value = !listboxOpen.value

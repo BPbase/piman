@@ -70,7 +70,6 @@
           v-model="value"
           placeholder="fixed"
           fixed
-          optionWidth="100px"
           :options="options2"
           @click="onClick"
           listboxClass="abc"
