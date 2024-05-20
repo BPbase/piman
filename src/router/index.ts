@@ -76,9 +76,14 @@ const routes = [
         path: '/tooltip',
         name: 'demo-tooltip',
         component: () => import('@/views/demo/DemoTooltip.vue')
+      },
+      {
+        path: '/dropdown',
+        name: 'demo-dropdown',
+        component: () => import('@/views/demo/DemoDropdown.vue')
       }
     ]
-  },
+  }
 ]
 
 const router = createRouter({
@@ -86,11 +91,11 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      const focusEl = document.querySelector(to.hash);
-      focusEl.focus();
+      const focusEl = document.querySelector(to.hash)
+      focusEl.focus()
       return {
         el: to.hash,
-        behavior: 'smooth',
+        behavior: 'smooth'
       }
     }
   }

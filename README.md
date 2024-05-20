@@ -18,7 +18,7 @@
 | Button | `PiButton.vue` | ✅ |
 | Card | `PiCard.vue` | ✅ |
 | Checkbox | `PiCheckbox.vue` | ✅ |
-| Dropdown | `BpaDropdown.vue` |  |
+| Dropdown | `PiDropdown.vue` | ✅ |
 | Form | `BpaForm.vue`、`BpaFormItem.vue`、套件[async-validator](https://github.com/yiminghe/async-validator) |  |
 | Input | `PiInput.vue` | ✅ |
 | Msg | `PiMsg.vue`、`PiMsg.ts` | ✅ |
