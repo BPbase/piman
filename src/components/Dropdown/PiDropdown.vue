@@ -68,12 +68,12 @@
 <script lang="ts" setup>
 import useI18n from '@/locales/useI18n'
 import useClickOutside from '@/composables/useClickOutside'
-import FocusTrap from '@/composables/useFocusTrap'
 import { onMounted, ref } from 'vue'
 import { generateId } from '@/utils/generateId'
 const { t } = useI18n()
 type Option = {
   label: string
+  value?: string
   htmlLabel?: string
   url?: string
   type?: string
@@ -128,7 +128,9 @@ const handleClickOption = (item: Option, index: number, type: string) => {
     showLabel.value = item.label
   emit('click', item)
 }
-const onKeypress = () => {}
+const onKeypress = () => {
+  console.log('onKeypress')
+}
 const handleClickOutside = () => {
   listboxOpen.value = false
 }

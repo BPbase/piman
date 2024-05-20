@@ -99,7 +99,6 @@
 import { ref } from 'vue'
 
 const value = ref('')
-
 const path = ref([{ title: '🏠首頁', url: '/' }, { title: 'Dropdown' }])
 const options = [
   { type: 'link', url: '/', label: '內部連結', htmlLabel: '<mark>內部連結</mark>' },
