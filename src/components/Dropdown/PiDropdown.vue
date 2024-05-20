@@ -15,8 +15,9 @@
     >
       <slot name="prefix"></slot>
       <span class="pi-dropdown-text" :id="`${fixId}-label-text`">
-        <span v-if="placeholder">{{ placeholder }}</span>
-        <span v-else>{{ t('dropdown.placeholder') }}</span>
+        <span :class="`placeholder-${theme}`" v-if="placeholder">{{ placeholder }}</span>
+        <span v-else-if="showLabel"> {{ showLabel }}</span>
+        <span :class="`placeholder-${theme}`" v-else>{{ t('dropdown.placeholder') }}</span>
         <span class="visually-hidden">{{ t('dropdown.hint') }}</span>
       </span>
       <slot name="affix"></slot>
@@ -79,7 +80,10 @@ type Option = {
   disabled?: boolean
 }
 const props = defineProps({
-  theme: String,
+  theme: {
+    type: String,
+    default: 'default'
+  },
   disabled: Boolean,
   id: String,
   options: {
@@ -94,11 +98,12 @@ const props = defineProps({
   size: String,
   listboxClass: String
 })
-const emits = defineEmits(['click'])
+const emit = defineEmits(['click'])
 const refPiDropdown = ref(null)
 const refPiDropdownList = ref(null)
 const listboxOpen = ref(false)
 const fixId = ref('')
+const showLabel = ref('')
 const openListbox = () => {
   listboxOpen.value = true
   // fixed
@@ -117,7 +122,12 @@ const handleClickSelect = () => {
   if (listboxOpen.value) listboxOpen.value = !listboxOpen.value
   else openListbox()
 }
-const handleClickOption = (item: Option, index: number, type: string) => {}
+const handleClickOption = (item: Option, index: number, type: string) => {
+  listboxOpen.value = false
+  if (item.label && item.type !== 'link' && item.type !== 'external-link')
+    showLabel.value = item.label
+  emit('click', item)
+}
 const onKeypress = () => {}
 const handleClickOutside = () => {
   listboxOpen.value = false
@@ -142,6 +152,9 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
+  .placeholder-default {
+    color: oklch(var(--color-gray-600));
+  }
   &:after {
     content: '';
     display: block;
