@@ -82,7 +82,7 @@
           @click="onClick"
         />
         <br />
-        <h3>自定義 class</h3>
+        <h3>在 listbox增加自定義 classname</h3>
         <pi-dropdown
           v-model="value"
           placeholder="custom class"
