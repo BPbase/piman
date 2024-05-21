@@ -17,6 +17,7 @@
       :aria-labelledby="`accordion-title-${fixId}`"
       :aria-hidden="`${!accordionContainerOpen}`"
       class="pi-accordion__item-container"
+      v-show="accordionContainerOpen"
     >
       <slot></slot>
     </div>
