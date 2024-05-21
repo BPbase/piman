@@ -15,8 +15,8 @@
     >
       <slot name="prefix"></slot>
       <span class="pi-dropdown-text" :id="`${fixId}-label-text`">
-        <span :class="`placeholder-${theme}`" v-if="placeholder">{{ placeholder }}</span>
-        <span v-else-if="showLabel"> {{ showLabel }}</span>
+        <span v-if="showLabel"> {{ showLabel }}</span>
+        <span :class="`placeholder-${theme}`" v-else-if="placeholder">{{ placeholder }}</span>
         <span :class="`placeholder-${theme}`" v-else>{{ t('dropdown.placeholder') }}</span>
         <span class="visually-hidden">{{ t('dropdown.hint') }}</span>
       </span>
@@ -96,7 +96,10 @@ const props = defineProps({
   fixed: Boolean,
   optionWidth: String,
   size: String,
-  listboxClass: String
+  listboxClass: {
+    type: String,
+    default: ''
+  }
 })
 const emit = defineEmits(['click'])
 const refPiDropdown = ref(null)
