@@ -1,8 +1,5 @@
 <template>
-  <div
-    role="presentation"
-    class="pi-accordion"
-  >
+  <div role="presentation" class="pi-accordion">
     <slot></slot>
   </div>
 </template>
