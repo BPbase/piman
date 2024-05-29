@@ -24,23 +24,6 @@ let instance: any
 let seed = 1
 let showOrder = 1
 
-export let defaultMsgOpt: MsgOption = {
-  visible: true,
-  prefix: '',
-  dangerHTML: false,
-  msg: '',
-  theme: 'primary',
-  duration: 5000,
-  timer: undefined,
-  closed: false,
-  onClose: null,
-  position: 'right',
-  hOffset: '1rem',
-  vOffset: 80,
-  width: '180px',
-  id: '',
-  autoClose: true
-}
 const initData = (): MsgOption => {
   return {
     visible: true,
@@ -60,6 +43,8 @@ const initData = (): MsgOption => {
     autoClose: true
   }
 }
+export let defaultMsgOpt: MsgOption = initData()
+
 const Msg = function (options: MsgOption | string) {
   if (!options) console.error(`[PiMsg Error] Msg 方法需要1個參數（字串或物件）`)
   defaultMsgOpt = initData()
