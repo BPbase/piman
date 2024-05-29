@@ -50,17 +50,32 @@
         <pi-button theme="danger" @click="callStringMsg('danger', 'this is danger string')"
           >Danger</pi-button
         >
+        <br />
+        Msg option content
+        <pi-button @click="callObjectMsg('', 'hello I\'m default')">Default</pi-button>
+        <pi-button theme="primary" @click="callObjectMsg('primary', 'hello I\'m primary')"
+          >Primary</pi-button
+        >
+        <pi-button theme="success" @click="callObjectMsg('success', 'hello I\'m success')"
+          >Success</pi-button
+        >
+        <pi-button theme="warning" @click="callObjectMsg('warning', 'hello I\'m warning')"
+          >Warning</pi-button
+        >
+        <pi-button theme="danger" @click="callObjectMsg('danger', 'hello I\'m danger')">
+          Danger</pi-button
+        >
       </section>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { themeType } from '@/components/Msg/PiMsg'
+import type { ThemeType } from '@/components/Msg/PiMsg'
 import { inject, ref } from 'vue'
 const path = ref([{ title: '🏠首頁', url: '/' }, { title: 'Msg' }])
 const myMsg: any = inject('PiMsg')
-const callMsg = (type: themeType, msg: string) => {
+const callMsg = (type: ThemeType, msg: string) => {
   myMsg({
     msg: msg,
     theme: type,
@@ -70,12 +85,39 @@ const callMsg = (type: themeType, msg: string) => {
     }
   })
 }
-const callStringMsg = (type: themeType, msg: string) => {
-  console.log('msg:', msg)
+const callStringMsg = (type: ThemeType, msg: string) => {
   // use type to call myMsg.type
   if (type === '') {
-    type = 'default'
+    type = 'info'
   }
   myMsg[type](msg)
+}
+const callObjectMsg = (type: ThemeType, msg: string) => {
+  // use type to call myMsg.type
+  let option = {
+    msg: msg,
+    duration: 1000,
+    position: 'center',
+    width: '300px',
+    onClose: () => {
+      console.log('msg closed')
+    }
+  }
+  switch (type) {
+    case 'primary':
+      myMsg.primary(option)
+      break
+    case 'success':
+      myMsg.success(option)
+      break
+    case 'warning':
+      myMsg.warning(option)
+      break
+    case 'danger':
+      myMsg.danger(option)
+      break
+    default:
+      myMsg.info(option)
+  }
 }
 </script>

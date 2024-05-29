@@ -1,14 +1,14 @@
 import { createApp } from 'vue'
 import PiMsg from './PiMsg.vue'
 
-export type themeType = '' | 'primary' | 'success' | 'warning' | 'danger' | 'default'
+export type ThemeType = '' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
 interface MsgOption {
   visible?: boolean
   closed?: boolean
   prefix?: string
   dangerHTML?: boolean
   msg: string
-  theme?: themeType
+  theme?: ThemeType
   duration?: number
   timer?: number
   onClose?: null | any
@@ -93,8 +93,8 @@ const Msg = function (options: MsgOption | string) {
   return instance
 }
 
-// set theme function for Msg, // success, warning, primary, danger, default
-;['success', 'warning', 'primary', 'danger', 'default'].forEach((type: themeType) => {
+// set theme function for Msg, // success, warning, primary, danger, info
+;['success', 'warning', 'primary', 'danger', 'info'].forEach((type: ThemeType) => {
   ;(Msg as { [key: string]: any })[type] = (options: MsgOption | string) => {
     let opt: MsgOption
     if (typeof options === 'string') {
@@ -105,7 +105,7 @@ const Msg = function (options: MsgOption | string) {
     } else {
       opt = { ...defaultMsgOpt, ...options }
     }
-    if (type !== 'default') opt.theme = type as themeType
+    if (type !== 'info') opt.theme = type as ThemeType
     else opt.theme = ''
     return Msg(opt)
   }
