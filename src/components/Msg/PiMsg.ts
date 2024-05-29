@@ -24,7 +24,7 @@ let instance: any
 let seed = 1
 let showOrder = 1
 
-export const defaultMsgOpt: MsgOption = {
+export let defaultMsgOpt: MsgOption = {
   visible: true,
   prefix: '',
   dangerHTML: false,
@@ -41,9 +41,28 @@ export const defaultMsgOpt: MsgOption = {
   id: '',
   autoClose: true
 }
-
+const initData = (): MsgOption => {
+  return {
+    visible: true,
+    prefix: '',
+    dangerHTML: false,
+    msg: '',
+    theme: 'primary',
+    duration: 5000,
+    timer: undefined,
+    closed: false,
+    onClose: null,
+    position: 'right',
+    hOffset: '1rem',
+    vOffset: 80,
+    width: '180px',
+    id: '',
+    autoClose: true
+  }
+}
 const Msg = function (options: MsgOption | string) {
   if (!options) console.error(`[PiMsg Error] Msg 方法需要1個參數（字串或物件）`)
+  defaultMsgOpt = initData()
   if (typeof options === 'string') {
     options = {
       ...defaultMsgOpt,
@@ -99,11 +118,10 @@ const Msg = function (options: MsgOption | string) {
     let opt: MsgOption
     if (typeof options === 'string') {
       opt = {
-        ...defaultMsgOpt,
         msg: options
       }
     } else {
-      opt = { ...defaultMsgOpt, ...options }
+      opt = { ...options }
     }
     if (type !== 'info') opt.theme = type as ThemeType
     else opt.theme = ''
