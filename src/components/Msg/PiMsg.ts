@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import PiMsg from './PiMsg.vue'
 
-export type themeType = "" | "primary"|"success"|"warning"|"danger"
+export type themeType = '' | 'primary' | 'success' | 'warning' | 'danger' | 'default'
 interface MsgOption {
   visible?: boolean
   closed?: boolean
@@ -43,7 +43,7 @@ export const defaultMsgOpt: MsgOption = {
 }
 
 const Msg = function (options: MsgOption | string) {
-  if(!options) console.error(`[PiMsg Error] Msg 方法需要1個參數（字串或物件）`)
+  if (!options) console.error(`[PiMsg Error] Msg 方法需要1個參數（字串或物件）`)
   if (typeof options === 'string') {
     options = {
       ...defaultMsgOpt,
@@ -55,7 +55,7 @@ const Msg = function (options: MsgOption | string) {
     options.id = id
     options.closed = false
 
-    options.onClose = function() {
+    options.onClose = function () {
       Msg.close(id, userOnClose)
     }
     // set defaultOptions from options
@@ -66,16 +66,16 @@ const Msg = function (options: MsgOption | string) {
     }
   }
   const app: any = createApp(PiMsg, {
-    ...options,
+    ...options
   })
   app.vm = app.mount(document.createElement('div'))
   // append to body
   const tmp = document.body.appendChild(app.vm.$el)
   const getElement = document.getElementById(tmp.id)
   // append width
-  if(defaultMsgOpt.width) getElement.style.width = defaultMsgOpt.width
+  if (defaultMsgOpt.width) getElement.style.width = defaultMsgOpt.width
   // append position
-  switch(defaultMsgOpt.position) {
+  switch (defaultMsgOpt.position) {
     case 'left':
       getElement.style.left = defaultMsgOpt.hOffset
       break
@@ -87,14 +87,15 @@ const Msg = function (options: MsgOption | string) {
       getElement.style.right = defaultMsgOpt.hOffset
       break
   }
-  if(showOrder < 1) showOrder = 1
-  getElement.style.top = (defaultMsgOpt.vOffset)*(showOrder++) + 'px'
+  if (showOrder < 1) showOrder = 1
+  getElement.style.top = defaultMsgOpt.vOffset * showOrder++ + 'px'
 
   return instance
-};
+}
 
-['success', 'warning', 'primary', 'danger' ].forEach(type => {
-  (Msg as {[key: string]: any})[type] = (options: MsgOption | string) => {
+// set theme function for Msg, // success, warning, primary, danger, default
+;['success', 'warning', 'primary', 'danger', 'default'].forEach((type: themeType) => {
+  ;(Msg as { [key: string]: any })[type] = (options: MsgOption | string) => {
     let opt: MsgOption
     if (typeof options === 'string') {
       opt = {
@@ -104,21 +105,22 @@ const Msg = function (options: MsgOption | string) {
     } else {
       opt = { ...defaultMsgOpt, ...options }
     }
-    opt.theme = type as themeType
+    if (type !== 'default') opt.theme = type as themeType
+    else opt.theme = ''
     return Msg(opt)
   }
 })
 
-Msg.close = function(id: string, userOnClose: any) {
+Msg.close = function (id: string, userOnClose: any) {
   // remove current by id
   const el = document.getElementById(id)
   // destroy el
-  if(el) el.parentNode?.removeChild(el)
+  if (el) el.parentNode?.removeChild(el)
   // get every element
   const allMsg = document.querySelectorAll('.pi-msg')
   // minus top of every element
   allMsg.forEach((item: any, index) => {
-    item.style.top = (defaultMsgOpt.vOffset)*(index+1) + 'px'
+    item.style.top = defaultMsgOpt.vOffset * (index + 1) + 'px'
   })
   showOrder--
   if (userOnClose) {
