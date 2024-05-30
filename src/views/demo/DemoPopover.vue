@@ -7,12 +7,21 @@
           :key="`pathIndex-${pathIndex}`"
           :title="`前往${pathItem.title}`"
           :to="pathItem.url"
-        > {{ pathItem.title }}</pi-breadcrumb-item>
+        >
+          {{ pathItem.title }}</pi-breadcrumb-item
+        >
       </pi-breadcrumb>
     </div>
-    
+
     <div class="page-main">
-      <router-link to="#ak-container" title="中央內容區塊" id="ak-container" accesskey="C" name="ak-container">:::</router-link>
+      <router-link
+        to="#ak-container"
+        title="中央內容區塊"
+        id="ak-container"
+        accesskey="C"
+        name="ak-container"
+        >:::</router-link
+      >
       <h2>Popover</h2>
       <section>
         <h3>Size</h3>
@@ -38,49 +47,39 @@
           <template v-slot:title>
             <mark>Popover Button Text</mark>
           </template>
-          Slot Custom Button Popover 
+          Slot Custom Button Popover
         </pi-popover>
       </section>
       <section>
         <h3>Padding = 0</h3>
-        <pi-popover nopadding> 
-          Popover Content (no padding)
-        </pi-popover>
+        <pi-popover nopadding> Popover Content (no padding) </pi-popover>
       </section>
       <section>
         <h3>Select</h3>
         <pi-popover>
-            <pi-select
-            v-model="value"
-            :options="options"
-          />
+          <pi-select v-model="value" :options="options" />
         </pi-popover>
       </section>
       <section>
         <h3>Popover + Popover</h3>
         <pi-popover>
-          Parent Popover <br/>
-          <pi-popover>
-            Child Popover
-          </pi-popover>
+          Parent Popover <br />
+          <pi-popover> Child Popover </pi-popover>
         </pi-popover>
       </section>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const path = ref([
-  { title: '🏠首頁', url: '/'},
-  { title: 'Popover'},
-]);
+const path = ref([{ title: '🏠首頁', url: '/' }, { title: 'Popover' }])
 
 const options = [
   { label: 'label1', value: '1' },
   { label: 'label2', value: '2' },
-  { label: 'label3', value: '3' },
-];
+  { label: 'label3', value: '3' }
+]
 
-const value = ref('1');
+const value = ref('1')
 </script>
