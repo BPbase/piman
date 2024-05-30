@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-import { generateId } from '@/utils/generateId';
-import { onMounted, ref } from 'vue';
-import useI18n from "@/locales/useI18n";
+import { generateId } from '@/utils/generateId'
+import { onMounted, ref } from 'vue'
+import useI18n from '@/locales/useI18n'
 
 const props = defineProps({
   id: String,
   title: {
-    type: String,
+    type: String
   },
   open: {
     type: Boolean,
@@ -44,26 +44,22 @@ const { t } = useI18n()
 const fixId = ref('')
 const accordionContainerOpen = ref(false)
 const handleClickAccordion = () => {
-  accordionContainerOpen.value = !accordionContainerOpen.value;
+  accordionContainerOpen.value = !accordionContainerOpen.value
 }
 
-onMounted(()=>{
-  if(props.open == true) {
+onMounted(() => {
+  if (props.open == true) {
     accordionContainerOpen.value = true
   }
-  if(props.id){
+  if (props.id) {
     fixId.value = props.id
-  }
-  else {
+  } else {
     fixId.value = String(generateId())
   }
 })
-
-
 </script>
 
 <style scoped>
-
 .pi-accordion__item {
   border-bottom: 1px solid oklch(var(--color-border, 78.94% 0 0));
   word-break: break-all;
@@ -72,11 +68,12 @@ onMounted(()=>{
 
 .pi-accordion__item-header {
   position: relative;
-  >button {
+  > button {
     position: relative;
     display: block;
     width: 100%;
-    padding: var(--spacing-m, 1rem) var(--spacing-xxl, 4rem) var(--spacing-m, 1rem) var(--spacing-m, 1rem);
+    padding: var(--spacing-m, 1rem) var(--spacing-xxl, 4rem) var(--spacing-m, 1rem)
+      var(--spacing-m, 1rem);
     font-size: 1.125rem;
     font-weight: bold;
     display: flex;
@@ -87,7 +84,7 @@ onMounted(()=>{
     color: oklch(var(--accordion-header-color, 24.84% 0 0));
     background: oklch(var(--accordion-header-bg, 99.4% 0 0));
     border: none;
-    >div {
+    > div {
       width: 100%;
     }
     &:before {
@@ -98,7 +95,9 @@ onMounted(()=>{
       width: 5px;
       height: 0;
       background-color: oklch(var(--accordion-bar-color, 46.28% 0.156 255.66));
-      transition: height 160ms ease-in, background-color 160ms ease-in;
+      transition:
+        height 160ms ease-in,
+        background-color 160ms ease-in;
     }
     &:after {
       content: '';
@@ -125,14 +124,15 @@ onMounted(()=>{
       }
     }
     &:focus {
-      box-shadow: inset 0 0 0 3px oklch(var(--color-focus, 83.15% 0.15681888825079074 78.05241467152487));
-      @media screen and (-ms-high-contrast: active),(-ms-high-contrast: none){
+      box-shadow: inset 0 0 0 3px
+        oklch(var(--color-focus, 83.15% 0.15681888825079074 78.05241467152487));
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         &:before {
           height: 100%;
         }
       }
     }
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       &:after {
         top: calc(50% - 4px);
         transform: rotate(225deg);
@@ -148,7 +148,7 @@ onMounted(()=>{
   line-height: 1.5rem;
   word-break: break-all;
   word-break: break-word;
-  &[aria-hidden="true"] {
+  &[aria-hidden='true'] {
     display: none;
   }
 }

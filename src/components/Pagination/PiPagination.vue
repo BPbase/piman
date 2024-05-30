@@ -6,7 +6,9 @@
         class="pi-pagination-info"
       >
         {{ t('pagination.total') }}
-        <span v-if="layout.includes('total_page')">{{ totalPages }} {{ t('pagination.page') }}&nbsp;</span>
+        <span v-if="layout.includes('total_page')"
+          >{{ totalPages }} {{ t('pagination.page') }}&nbsp;</span
+        >
         <span v-if="layout.includes('total_item')">{{ total }} {{ t('pagination.result') }}</span>
       </div>
       <div
@@ -28,18 +30,12 @@
             <span class="affix">{{ t('pagination.result') }}</span>
           </template>
         </pi-select> -->
-      </div> 
+      </div>
     </div>
     <div class="pi-pagination-group__item">
-      <nav
-        :aria-label="t('pagination.aria')"
-        class="pi-pagination"
-      >
+      <nav :aria-label="t('pagination.aria')" class="pi-pagination">
         <ul>
-          <li
-            v-if="layout.includes('first')"
-            class="first"
-          >
+          <li v-if="layout.includes('first')" class="first">
             <pi-button
               :aria-disabled="props.currentPage === 1 ? true : false"
               :disabled="props.currentPage === 1 ? true : false"
@@ -67,7 +63,7 @@
               </slot>
             </pi-button>
           </li>
-          <li 
+          <li
             v-for="item in pagers"
             :key="item"
             :class="item === props.currentPage ? 'current' : ''"
@@ -86,7 +82,7 @@
           <li class="next">
             <pi-button
               :aria-disabled="props.currentPage === totalPages ? true : false"
-              :disabled="(props.currentPage === totalPages) || (totalPages === 0) ? true : false"
+              :disabled="props.currentPage === totalPages || totalPages === 0 ? true : false"
               theme="primary-ghost"
               :size="size"
               @click="handleClickPager(nextPage)"
@@ -97,13 +93,10 @@
               </slot>
             </pi-button>
           </li>
-          <li
-            v-if="layout.includes('last')"
-            class="last"
-          >
+          <li v-if="layout.includes('last')" class="last">
             <pi-button
               :aria-disabled="props.currentPage === totalPages ? true : false"
-              :disabled="(props.currentPage === totalPages) || (totalPages === 0) ? true : false"
+              :disabled="props.currentPage === totalPages || totalPages === 0 ? true : false"
               theme="primary-ghost"
               :size="size"
               @click="handleClickPager(totalPages)"
@@ -117,7 +110,7 @@
         </ul>
       </nav>
     </div>
-    <div 
+    <div
       v-if="layout.includes('jump')"
       class="pi-pagination-group__item pi-pagination-group__item--jump"
     >
@@ -139,11 +132,11 @@
 </template>
 
 <script lang="ts" setup>
-import { generateId } from '@/utils/generateId';
-import { ref, onMounted, computed, watch } from 'vue';
-import useI18n from "@/locales/useI18n";
+import { generateId } from '@/utils/generateId'
+import { ref, onMounted, computed, watch } from 'vue'
+import useI18n from '@/locales/useI18n'
 
-const props = defineProps ({
+const props = defineProps({
   total: { type: Number, required: true },
   currentPage: { type: Number, required: true },
   pagerCount: { type: Number, default: 5 },
@@ -154,71 +147,73 @@ const props = defineProps ({
         { label: '10', value: 10 },
         { label: '20', value: 20 },
         { label: '50', value: 50 },
-        { label: '100', value: 100 },
+        { label: '100', value: 100 }
       ]
     }
   },
   pageSize: { type: Number, default: 10 },
-  layout: { type: Array, default: () => ['total_item', 'total_page', 'page_size', 'first', 'last', 'jump']},
+  layout: {
+    type: Array,
+    default: () => ['total_item', 'total_page', 'page_size', 'first', 'last', 'jump']
+  },
   size: String
 })
 
 const { t } = useI18n()
 const goPagesId = ref('')
-const syncCurrentPage = ref(props.currentPage);
+const syncCurrentPage = ref(props.currentPage)
 const syncPageSize = computed({
   get() {
     return props.pageSize
   },
-  set(newValue : number){
+  set(newValue: number) {
     return newValue
   }
 })
-const totalPages = computed(() => Math.ceil(props.total / syncPageSize.value));
-const prevPage = computed(() => props.currentPage - 1);
-const nextPage = computed(() => props.currentPage + 1);
-const jumperNumber = ref(syncCurrentPage.value);
+const totalPages = computed(() => Math.ceil(props.total / syncPageSize.value))
+const prevPage = computed(() => props.currentPage - 1)
+const nextPage = computed(() => props.currentPage + 1)
+const jumperNumber = ref(syncCurrentPage.value)
 const pagers = computed(() => {
-  const pagerStart = (Math.ceil(props.currentPage / props.pagerCount) - 1) * props.pagerCount + 1;
-  const pagerEnd = (Math.ceil(props.currentPage / props.pagerCount) - 1) * props.pagerCount + props.pagerCount;
-  const pagers = [];
+  const pagerStart = (Math.ceil(props.currentPage / props.pagerCount) - 1) * props.pagerCount + 1
+  const pagerEnd =
+    (Math.ceil(props.currentPage / props.pagerCount) - 1) * props.pagerCount + props.pagerCount
+  const pagers = []
   for (let i = pagerStart; i <= pagerEnd; i++) {
     if (i <= totalPages.value) {
-      pagers.push(i);
+      pagers.push(i)
     }
   }
-  return pagers;
-});
+  return pagers
+})
 
 // const handleChangePageSize = (pageSize) => {
 //   emit('change:pageSize', pageSize)
 // };
 
-const emit = defineEmits(['update:currentPage','sync-page-param', 'change:page']);
+const emit = defineEmits(['update:currentPage', 'sync-page-param', 'change:page'])
 
 const handleClickPager = (page) => {
   if (page > 0 && page <= totalPages.value) {
     syncCurrentPage.value = page
-    emit('update:currentPage',  Number(page));
-    emit('sync-page-param', { currentPage: Number(page) });
-    emit('change:page', Number(page));
+    emit('update:currentPage', Number(page))
+    emit('sync-page-param', { currentPage: Number(page) })
+    emit('change:page', Number(page))
   }
   // else {
   //   PiMsg({
   //     msg: t('pagination.exceed'),
   //   });
   // }
-};
+}
 
 watch(syncCurrentPage, (newPage) => {
-  jumperNumber.value = newPage;
-});
-
-
-onMounted(()=>{
-  goPagesId.value = 'bpa-pagination-go-pages-' + generateId()
+  jumperNumber.value = newPage
 })
 
+onMounted(() => {
+  goPagesId.value = 'bpa-pagination-go-pages-' + generateId()
+})
 </script>
 
 <style scoped>
@@ -250,7 +245,7 @@ onMounted(()=>{
     display: flex;
     gap: 1rem;
     & li {
-      &:not(.current){
+      &:not(.current) {
         @media screen and (width <= 768px) {
           display: none;
         }

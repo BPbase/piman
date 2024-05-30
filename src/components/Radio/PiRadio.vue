@@ -1,11 +1,5 @@
 <template>
-  <label
-    :for="fixId"
-    :class="[
-      'pi-radio-label',
-      disabled ? 'pi-radio-label--disabled' : ''
-    ]"
-  >
+  <label :for="fixId" :class="['pi-radio-label', disabled ? 'pi-radio-label--disabled' : '']">
     <input
       type="radio"
       :id="fixId"
@@ -22,8 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue';
-import { generateId } from '@/utils/generateId';
+import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
+import { generateId } from '@/utils/generateId'
 
 const props = defineProps({
   id: {
@@ -36,46 +30,45 @@ const props = defineProps({
   name: String
 })
 
-const emit = defineEmits([ 'input', 'blur', 'change', 'update:modelValue' ])
+const emit = defineEmits(['input', 'blur', 'change', 'update:modelValue'])
 
 const fixId = ref('')
 
 const activeCheck = computed({
-  get(){
+  get() {
     return props.modelValue
   },
-  set(){
+  set() {
     return emit('update:modelValue', props.value)
   }
 })
 
-const formItem = computed(()=>{
+const formItem = computed(() => {
   const self = getCurrentInstance()
-  if(!self) return null
-  let parent = self.parent;
-  if(!parent) return null
-  let parentName = parent.type.__name;
+  if (!self) return null
+  let parent = self.parent
+  if (!parent) return null
+  let parentName = parent.type.__name
 
   while (parentName !== 'PiFormItem') {
-    parent = parent.parent;
-    if(!parent) return null
-    parentName = parent.type.__name;
+    parent = parent.parent
+    if (!parent) return null
+    parentName = parent.type.__name
   }
-  return parent;
+  return parent
 })
 
 const onEvent = (event: 'blur' | 'change') => {
   emit(event)
-  nextTick(()=>{
-    if(formItem.value) formItem.value.emit(event)
+  nextTick(() => {
+    if (formItem.value) formItem.value.emit(event)
   })
 }
 
 onMounted(() => {
   fixId.value = props.id ? `pi-checkbox-${props.id}` : `pi-checkbox-${generateId()}`
-});
+})
 </script>
-
 
 <style scoped>
 .pi-radio-label {
@@ -90,7 +83,7 @@ onMounted(() => {
     color: oklch(var(--radio-label-color));
     line-height: 1.5;
     &:before {
-      content:'';
+      content: '';
       position: absolute;
       transform: translate3d(calc(-1.5rem + 0.15625rem - 0.5px), 0.3125rem, 0);
       width: 0.875rem;
@@ -99,7 +92,7 @@ onMounted(() => {
       border-radius: 50%;
       opacity: 0;
       transition: opacity 120ms ease-in;
-      @media screen and (-ms-high-contrast: active),(-ms-high-contrast: none){
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         display: none;
       }
     }
@@ -127,7 +120,7 @@ onMounted(() => {
 }
 
 .pi-radio-input {
-  &[type="radio"] {
+  &[type='radio'] {
     cursor: pointer;
     appearance: none;
     position: absolute;
@@ -138,7 +131,10 @@ onMounted(() => {
     background-color: oklch(var(--radio-circle-bg));
     border: 1px solid oklch(var(--color-border));
     border-radius: 50%;
-    transition: background-color 160ms ease-in, border-color 160ms ease-in, box-shadow 160ms ease-in;
+    transition:
+      background-color 160ms ease-in,
+      border-color 160ms ease-in,
+      box-shadow 160ms ease-in;
     &:hover {
       border-color: oklch(var(--radio-border-hover-color));
     }
