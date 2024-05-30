@@ -1,10 +1,6 @@
 <template>
- <li class="pi-breadcrumb__item">
-    <router-link
-      v-if="to"
-      :to="to"
-      :title="title"
-    >
+  <li class="pi-breadcrumb__item">
+    <router-link v-if="to" :to="to" :title="title">
       <slot></slot>
     </router-link>
     <slot v-else></slot>
@@ -19,7 +15,6 @@ defineProps({
     required: true
   }
 })
-
 </script>
 
 <style scoped>
