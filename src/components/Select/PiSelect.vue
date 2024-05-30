@@ -1,13 +1,9 @@
 <template>
-  <div
-    ref="refPiSelect"
-    :id="`${fixId}`"
-    class="pi-select"
-  >
+  <div ref="refPiSelect" :id="`${fixId}`" class="pi-select">
     <pi-button
       type="button"
       :id="`${fixId}-btn`"
-      :theme=theme
+      :theme="theme"
       ref="refOpenBtn"
       aria-haspopup="listbox"
       :aria-expanded="listboxOpen ? 'true' : 'false'"
@@ -15,10 +11,7 @@
       :disabled="disabled"
       :size="size"
       @click="handleClickSelect"
-      :class="[
-        'pi-select-btn',
-        listboxOpen ? 'pi-select-btn--open' : '',
-      ]"
+      :class="['pi-select-btn', listboxOpen ? 'pi-select-btn--open' : '']"
       :a11y="a11y"
     >
       <slot name="prefix"></slot>
@@ -31,29 +24,17 @@
         <span v-if="placeholder">{{ placeholder }}</span>
         <span v-else>{{ t('select.placeholder') }}</span>
       </span>
-      <span
-        v-else-if="multiple !== undefined"
-        class="pi-select-text multiple-label-group"
-      >
+      <span v-else-if="multiple !== undefined" class="pi-select-text multiple-label-group">
         <template v-if="multiple === 'accordion' && selectedVal.length > 1">
           <span class="multiple-label">{{ selectedVal[0].label }}</span>
-          <span class="pi-badge">+{{ selectedVal.length -1 }}</span>
+          <span class="pi-badge">+{{ selectedVal.length - 1 }}</span>
         </template>
-        <span
-          v-else
-          v-for="item in selectedVal"
-          :key="item.value"
-          class="multiple-label"
-        >
+        <span v-else v-for="item in selectedVal" :key="item.value" class="multiple-label">
           {{ item.label }}
         </span>
       </span>
-      <span
-        v-else
-        :id="`${fixId}-label-text`"
-        class="pi-select-text"
-      >
-        {{ selectedVal[0].label  }}
+      <span v-else :id="`${fixId}-label-text`" class="pi-select-text">
+        {{ selectedVal[0].label }}
       </span>
       <slot name="affix"></slot>
       <div
@@ -83,10 +64,7 @@
         listboxClass ? listboxClass : ''
       ]"
     >
-      <div
-        v-if="toolbar"
-        class="toolbar"
-      >
+      <div v-if="toolbar" class="toolbar">
         <label :for="`${fixId}-search`">
           <pi-input
             v-model="searchInput"
@@ -101,23 +79,14 @@
       </div>
       <template v-for="(item, index) in innerOptions">
         <!-- 群組選項 -->
-        <li
-          role="group"
-          v-if="item.type === 'group'"
-          :key="`${index}-group`"
-          tabindex="-1"
-        >
+        <li role="group" v-if="item.type === 'group'" :key="`${index}-group`" tabindex="-1">
           <ul
             role="none"
             :aria-label="item.label"
             tabindex="-1"
             :aria-labelledby="`${fixId}-optgroup-${index}`"
           >
-            <li 
-              role="presentation"
-              class="optgroup-title"
-              :id="`${fixId}-optgroup-${index}`"
-            >
+            <li role="presentation" class="optgroup-title" :id="`${fixId}-optgroup-${index}`">
               {{ item.label }}
             </li>
             <li
@@ -163,42 +132,53 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick, getCurrentInstance, inject, Ref } from 'vue'
-import useI18n from "@/locales/useI18n"
+import {
+  ref,
+  reactive,
+  computed,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  getCurrentInstance,
+  inject,
+  Ref
+} from 'vue'
+import useI18n from '@/locales/useI18n'
 import { generateId } from '@/utils/generateId'
-import useClickOutside from "@/composables/useClickOutside"
+import useClickOutside from '@/composables/useClickOutside'
 import FocusTrap from '@/composables/useFocusTrap'
 
 interface ThisData {
-  listboxOpen: boolean;
-  selectedId: string;
-  selected: string | null | {value: string, label: string};
-  innerOptions: {value: string, label: string, checked: boolean}[];
-  options: (Option|OptionGroup)[];
-  selectedVal: {value: string, label: string}[];
-  keyword: string;
-  searchInput: string;
-  debounce: { wait: number, timer: number };
-  formItem: Vue | null;
-  trap: FocusTrap | null;
-  toolbar: string;
-  close(): void;
-  open(): void;
-  handleEsc(): void;
-  handleClickOutside(): void;
-  onSearch(): void;
-  resetTrap(el: HTMLElement): void;
+  listboxOpen: boolean
+  selectedId: string
+  selected: string | null | { value: string; label: string }
+  innerOptions: { value: string; label: string; checked: boolean }[]
+  options: (Option | OptionGroup)[]
+  selectedVal: { value: string; label: string }[]
+  keyword: string
+  searchInput: string
+  debounce: { wait: number; timer: number }
+  formItem: Vue | null
+  trap: FocusTrap | null
+  toolbar: string
+  close(): void
+  open(): void
+  handleEsc(): void
+  handleClickOutside(): void
+  onSearch(): void
+  resetTrap(el: HTMLElement): void
 }
 
 interface OptionGroup {
-  label: string,
-  type: 'group',
+  label: string
+  type: 'group'
   options: Option[]
 }
 
 interface Option {
-  value: string,
-  label: string,
+  value: string
+  label: string
 }
 
 const { t } = useI18n()
@@ -207,10 +187,10 @@ const props = defineProps({
   theme: String,
   options: {
     type: Array,
-    required: true,
+    required: true
   },
-  modelValue: [ String, Number, Array ],
-  multiple: [ String ],
+  modelValue: [String, Number, Array],
+  multiple: [String],
   placeholder: String,
   showClear: {
     type: Boolean,
@@ -221,21 +201,23 @@ const props = defineProps({
   optionWidth: String,
   size: String,
   listboxClass: String,
-  a11y: Boolean,
+  a11y: Boolean
 })
-const emit = defineEmits([ 'search', 'update:modelValue', 'blur', 'change', 'toggleSlotItem' ])
+const emit = defineEmits(['search', 'update:modelValue', 'blur', 'change', 'toggleSlotItem'])
 
 // refs
-const self = getCurrentInstance();
-const parentIntercept = (self.parent as any).provides.openIntercept ? inject('openIntercept') as Ref<{ escEvent: boolean, clickOutSideEvent: boolean }> : undefined;
+const self = getCurrentInstance()
+const parentIntercept = (self.parent as any).provides.openIntercept
+  ? (inject('openIntercept') as Ref<{ escEvent: boolean; clickOutSideEvent: boolean }>)
+  : undefined
 
 const refPiSelect = ref(null)
-const refOpenBtn = ref<InstanceType<typeof PiButton> | null>(null);
+const refOpenBtn = ref<InstanceType<typeof PiButton> | null>(null)
 const refListbox = ref(null)
 const refSelectSearch = ref(null)
 const listboxOpen = ref(false)
 const selectedId = ref('')
-const fixId = ref(generateId());
+const fixId = ref(generateId())
 const keyword = ref('')
 const searchInput = ref('')
 const trap = ref(null)
@@ -247,31 +229,27 @@ const debounce = reactive({
 // Value
 const selectedVal = computed({
   get: () => {
-    if(props.multiple === undefined){
-      let groupOpt: typeof Option |undefined;
-      const opt = props.options
-        .find(o => {
-          if((o as OptionGroup).type === 'group'){
-            const found = (o as OptionGroup).options
-              .find(subO => subO.value === props.modelValue )
-            if(found) groupOpt = found
-          }
-          else {
-            return (o as Option).value === props.modelValue
-          }
-        })
-        
-      return opt? [opt] : groupOpt ? [groupOpt] : []
-    }
-    else {
-      let groupOpts: Option[] = []
-      const opt = props.options.filter(o => {
-        if((o as OptionGroup).type === 'group' && Array.isArray(props.modelValue)) {
-          const found = (o as OptionGroup).options
-            .filter( subO => props.modelValue.includes(subO.value))
-          groupOpts = groupOpts.concat(found)
+    if (props.multiple === undefined) {
+      let groupOpt: typeof Option | undefined
+      const opt = props.options.find((o) => {
+        if ((o as OptionGroup).type === 'group') {
+          const found = (o as OptionGroup).options.find((subO) => subO.value === props.modelValue)
+          if (found) groupOpt = found
+        } else {
+          return (o as Option).value === props.modelValue
         }
-        else if (Array.isArray(props.modelValue)) {
+      })
+
+      return opt ? [opt] : groupOpt ? [groupOpt] : []
+    } else {
+      let groupOpts: Option[] = []
+      const opt = props.options.filter((o) => {
+        if ((o as OptionGroup).type === 'group' && Array.isArray(props.modelValue)) {
+          const found = (o as OptionGroup).options.filter((subO) =>
+            props.modelValue.includes(subO.value)
+          )
+          groupOpts = groupOpts.concat(found)
+        } else if (Array.isArray(props.modelValue)) {
           return (props.modelValue as Array<string | number>).includes((o as Option).value)
         }
       })
@@ -280,8 +258,8 @@ const selectedVal = computed({
   },
   set: (val) => {
     emit('update:modelValue', val)
-    if(formItem.value){
-      nextTick(()=>{
+    if (formItem.value) {
+      nextTick(() => {
         formItem.value!.emit('change', val)
       })
     }
@@ -290,7 +268,7 @@ const selectedVal = computed({
 
 // Search delay
 const debounceSearch = () => {
-  if(debounce.timer) { 
+  if (debounce.timer) {
     clearTimeout(debounce.timer)
   }
   debounce.timer = setTimeout(onSearch, debounce.wait)
@@ -298,10 +276,9 @@ const debounceSearch = () => {
 
 // Search
 const onSearch = () => {
-  if(emit && emit.search) {
+  if (emit && emit.search) {
     emit('search', searchInput.value)
-  }
-  else {
+  } else {
     keyword.value = searchInput.value
     resetTrap(refSelectSearch.value as unknown as HTMLElement)
   }
@@ -309,8 +286,8 @@ const onSearch = () => {
 
 // Focus Back to Select Button
 const resetTrap = (firstFocus: HTMLElement) => {
-  nextTick(()=>{
-    if(trap.value) trap.value.dismiss()
+  nextTick(() => {
+    if (trap.value) trap.value.dismiss()
     const list: HTMLElement = refListbox.value as unknown as HTMLElement
     trap.value = new FocusTrap([refPiSelect.value as unknown as HTMLElement, list], firstFocus)
   })
@@ -318,15 +295,15 @@ const resetTrap = (firstFocus: HTMLElement) => {
 
 // Click Select Button
 const handleClickSelect = () => {
-  if (props.disabled) return;
-  listboxOpen.value ? close() : open();
+  if (props.disabled) return
+  listboxOpen.value ? close() : open()
 }
 
 // Click Select Button Outside
 const handleClickOutside = () => {
   const list: HTMLElement = refListbox.value as unknown as HTMLElement
   // Check if options from the multiple-select have been clicked
-  if(listboxOpen.value && !list.contains(event.target as Node)) {
+  if (listboxOpen.value && !list.contains(event.target as Node)) {
     close()
   }
 }
@@ -336,29 +313,34 @@ useClickOutside(refPiSelect, handleClickOutside)
 
 // Click Clear Button
 const handleClearSelected = () => {
-  innerOptions.value.forEach(o => o.checked = false)
+  innerOptions.value.forEach((o) => (o.checked = false))
   const val = props.multiple === undefined ? '' : []
   emit('update:modelValue', val)
-  if(formItem.value) formItem.value.emit('change', val)
-  selectedId.value = '';
-  document.getElementById(fixId.value+'-btn')!.focus();
+  if (formItem.value) formItem.value.emit('change', val)
+  selectedId.value = ''
+  document.getElementById(fixId.value + '-btn')!.focus()
 }
 
 // Click Select Option Item
-const handleClickOption = (item: {value: any, label: string}, index: number, parentIndex: number, group: boolean) => {
-  selectedId.value = group ? `${fixId.value}-optgroup-${parentIndex}-option-${index}` : `${fixId.value}-option-${index}`;
-  if(props.multiple === undefined){
+const handleClickOption = (
+  item: { value: any; label: string },
+  index: number,
+  parentIndex: number,
+  group: boolean
+) => {
+  selectedId.value = group
+    ? `${fixId.value}-optgroup-${parentIndex}-option-${index}`
+    : `${fixId.value}-option-${index}`
+  if (props.multiple === undefined) {
     close()
-    selectedVal.value = item.value;
-  }
-  else {
-    let arr = selectedVal.value.map(s=>(s as any).value)
+    selectedVal.value = item.value
+  } else {
+    let arr = selectedVal.value.map((s) => (s as any).value)
     let idx = arr.indexOf(item.value)
-    if(idx >= 0) {
+    if (idx >= 0) {
       arr.splice(idx, 1)
       selectedVal.value = arr as any
-    }
-    else {
+    } else {
       arr.push(item.value)
       selectedVal.value = arr as any
     }
@@ -367,49 +349,48 @@ const handleClickOption = (item: {value: any, label: string}, index: number, par
 
 // Keyboard Click
 const onKeypress = (evt: KeyboardEvent) => {
-  if( evt.target ) (evt.target as HTMLElement).click()
+  if (evt.target) (evt.target as HTMLElement).click()
 }
 
-// Keyboard Click: ESC 
+// Keyboard Click: ESC
 const handleEsc = (e: KeyboardEvent) => {
-  if(e.key !== 'Escape') return;
+  if (e.key !== 'Escape') return
   close()
 }
 
 // Close Select Options
 const close = () => {
   // 確保 close 方法可以在下拉列表沒有打開的情況下安全地被呼叫。
-  if (!listboxOpen.value) return;
+  if (!listboxOpen.value) return
 
   listboxOpen.value = false
 
   const list: HTMLElement = refListbox.value as unknown as HTMLElement
 
-  if(trap.value){
+  if (trap.value) {
     trap.value.dismiss()
     trap.value = null as any
   }
 
   refOpenBtn.value?.$el.focus()
-  
+
   document.body.removeChild(list)
-  
-  if(formItem.value) formItem.value.emit('blur')
+
+  if (formItem.value) formItem.value.emit('blur')
 
   document.removeEventListener('keyup', handleEsc)
-  if(parentIntercept) {
-    parentIntercept.value.escEvent = true;
-    parentIntercept.value.clickOutSideEvent = true;
+  if (parentIntercept) {
+    parentIntercept.value.escEvent = true
+    parentIntercept.value.clickOutSideEvent = true
   }
 }
 
 // Open Select Options
 const open = () => {
-
   close()
 
   listboxOpen.value = true
-  
+
   const list: HTMLElement = refListbox.value as unknown as HTMLElement
 
   document.body.appendChild(list)
@@ -417,63 +398,65 @@ const open = () => {
 
   const coor = refOpenBtn.value?.$el.getBoundingClientRect()
 
-  list.style.top = `${window.scrollY + coor.top + coor.height}px`;
-  const totalWidthOfDropdown = coor.left + (16 * 8);
+  list.style.top = `${window.scrollY + coor.top + coor.height}px`
+  const totalWidthOfDropdown = coor.left + 16 * 8
   if (totalWidthOfDropdown > document.body.clientWidth && coor.width < 16 * 8) {
-    list.style.right = "0";
-    list.style.width = "auto";
+    list.style.right = '0'
+    list.style.width = 'auto'
   } else {
-    list.style.left = `${coor.left}px`;
-    list.style.width = props.optionWidth || `${coor.width}px`;
+    list.style.left = `${coor.left}px`
+    list.style.width = props.optionWidth || `${coor.width}px`
   }
 
   document.addEventListener('keyup', handleEsc)
-  if(parentIntercept) {
-    parentIntercept.value.escEvent = false;
-    parentIntercept.value.clickOutSideEvent = false;
+  if (parentIntercept) {
+    parentIntercept.value.escEvent = false
+    parentIntercept.value.clickOutSideEvent = false
   }
 }
 
 // Form and FormItem match
-const formItem = computed(()=> {
-  if(!self) return null
-  let parent = self.parent;
-  if(!parent) return null
-  let parentName = parent.type.__name;
+const formItem = computed(() => {
+  if (!self) return null
+  let parent = self.parent
+  if (!parent) return null
+  let parentName = parent.type.__name
 
   while (parentName !== 'PiFormItem') {
-    parent = parent.parent;
-    if(!parent) return null
-    parentName = parent.type.__name;
+    parent = parent.parent
+    if (!parent) return null
+    parentName = parent.type.__name
   }
-  return parent;
+  return parent
 })
 
 // ??
-const innerOptions = computed(()=> {
-  let result = props.options.map((opt: OptionGroup|Option) => {
-    if((opt as OptionGroup).type === 'group'){
-      let subOpts =  (opt as OptionGroup).options.map(subO => {
+const innerOptions = computed(() => {
+  let result = props.options.map((opt: OptionGroup | Option) => {
+    if ((opt as OptionGroup).type === 'group') {
+      let subOpts = (opt as OptionGroup).options.map((subO) => {
         return {
-          checked: selectedVal.value.map(s=>(s as any).value).includes(subO.value),
+          checked: selectedVal.value.map((s) => (s as any).value).includes(subO.value),
           ...subO
         }
       })
-      if(keyword.value !== '') subOpts = subOpts.filter(opt => opt.label.includes(keyword.value))
-      
+      if (keyword.value !== '') subOpts = subOpts.filter((opt) => opt.label.includes(keyword.value))
+
       return {
         ...opt,
         options: subOpts
       }
-    }else{
-      return { 
-        checked: selectedVal.value.map(s=>(s as any).value).includes((opt as Option).value), 
-        ...opt 
+    } else {
+      return {
+        checked: selectedVal.value.map((s) => (s as any).value).includes((opt as Option).value),
+        ...opt
       }
     }
   })
-  if(keyword.value !== '') {
-    result = result.filter(opt => (opt as OptionGroup).type==='group' || opt.label.includes(keyword.value))
+  if (keyword.value !== '') {
+    result = result.filter(
+      (opt) => (opt as OptionGroup).type === 'group' || opt.label.includes(keyword.value)
+    )
   }
 
   return result
@@ -483,11 +466,10 @@ const innerOptions = computed(()=> {
 const optionsLength = computed(() => {
   let opt = 0
   let groupOpt = 0
-  props.options.forEach(o => {
-    if((o as OptionGroup).type === 'group'){
+  props.options.forEach((o) => {
+    if ((o as OptionGroup).type === 'group') {
       groupOpt += (o as OptionGroup).options.length
-    }
-    else opt++
+    } else opt++
   })
   return opt + groupOpt
 })
@@ -497,7 +479,7 @@ watch(optionsLength, (newValue, oldValue) => {
 })
 
 onMounted(() => {
-  if(props.id) {
+  if (props.id) {
     fixId.value = 'pi-select-' + props.id
   } else {
     fixId.value = 'pi-select-' + generateId() // 假設 generateId 是一個可用的函數
@@ -507,7 +489,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  if(listboxOpen.value) close()
+  if (listboxOpen.value) close()
 })
 </script>
 
@@ -560,7 +542,7 @@ onBeforeUnmount(() => {
 }
 
 .multiple-label {
-  &:not(:last-child){
+  &:not(:last-child) {
     &:after {
       content: ',';
       margin-right: var(--spacing-xs);
@@ -568,13 +550,13 @@ onBeforeUnmount(() => {
   }
 }
 
-.pi-select-text  {
+.pi-select-text {
   display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   flex: 1 0 0%;
-  @media screen and (-ms-high-contrast: active),(-ms-high-contrast: none){
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     flex: auto;
   }
 }
@@ -629,7 +611,7 @@ onBeforeUnmount(() => {
       }
     }
   }
-  [role="group"] {
+  [role='group'] {
     position: relative;
   }
   & .optgroup-title {
@@ -639,14 +621,14 @@ onBeforeUnmount(() => {
     padding: var(--spacing-xxs) var(--spacing-m);
     font-size: 0.75rem;
     color: oklch(var(--color-gray-700));
-    background-color:  oklch(var(--color-white));
+    background-color: oklch(var(--color-white));
     border-top: 1px solid oklch(var(--color-border));
     border-bottom: 1px solid oklch(var(--color-border));
   }
-  [role="option"] {
+  [role='option'] {
     cursor: pointer;
     padding: var(--spacing-xs) var(--spacing-m);
-    color:  oklch(var(--color-black));
+    color: oklch(var(--color-black));
     transition: background-color 160ms ease-in;
     &:hover {
       background-color: oklch(var(--color-gray-100));
@@ -708,5 +690,4 @@ onBeforeUnmount(() => {
     display: block;
   }
 }
-
 </style>
