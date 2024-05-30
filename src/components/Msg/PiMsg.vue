@@ -3,17 +3,14 @@
     <div
       v-show="visible"
       role="alert"
-      :class="[
-        'pi-msg',
-        theme ? `pi-msg--${ theme }` : 'pi-msg--default'
-      ]"
+      :class="['pi-msg', theme ? `pi-msg--${theme}` : 'pi-msg--default']"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
       <div class="pi-msg-wrap">
         <div>
           <div v-if="dangerHTML === false" class="prefix">{{ prefix }}</div>
-          <div v-else  v-html="prefix" class="prefix"></div>
+          <div v-else v-html="prefix" class="prefix"></div>
           <a
             href="javascript:;"
             accesskey="M"
@@ -27,11 +24,7 @@
         </div>
         <div class="msg-content">
           <span class="msg-inner">{{ msg }}</span>
-          <button
-            @click="close"
-            @focus="clearTimer"
-            class="msg-close"
-          >
+          <button @click="close" @focus="clearTimer" class="msg-close">
             <span aria-hidden="true">✖</span>
             <span class="visually-hidden">
               {{ t('msg.close') }}
@@ -45,15 +38,15 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import useI18n from '@/locales/useI18n';
-import { defaultMsgOpt } from "./PiMsg"
+import useI18n from '@/locales/useI18n'
+import { defaultMsgOpt } from './PiMsg'
 const { t } = useI18n()
 const localOptions = reactive(defaultMsgOpt)
 const { dangerHTML, prefix, msg, theme, closed, visible, autoClose } = toRefs(localOptions)
 const onClose = defaultMsgOpt.onClose
 const currentTimer = ref<any>(0)
 // watch closed
-watch(closed , (newVal) => {
+watch(closed, (newVal) => {
   if (newVal) {
     visible.value = false
   }
