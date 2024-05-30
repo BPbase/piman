@@ -1,35 +1,18 @@
 <template>
-  <div
-    :class="[
-      'pi-card',
-      shadow ? 'pi-card--shadow' : ''
-    ]"
-  >
-    <div
-      v-if="$slots.header || header"
-      class="pi-card-header"
-    >
+  <div :class="['pi-card', shadow ? 'pi-card--shadow' : '']">
+    <div v-if="$slots.header || header" class="pi-card-header">
       <slot name="header">{{ header }}</slot>
     </div>
-    <div
-      :class="[
-        'pi-card-container',
-        nopadding ? 'no-padding' : ''
-      ]"
-    >
+    <div :class="['pi-card-container', nopadding ? 'no-padding' : '']">
       <slot></slot>
     </div>
-    <div
-      v-if="$slots.footer || footer"
-      class="pi-card-footer"
-    >
+    <div v-if="$slots.footer || footer" class="pi-card-footer">
       <slot name="footer">{{ footer }}</slot>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-
 defineProps({
   header: {},
   footer: {},
@@ -71,7 +54,7 @@ defineProps({
     border-top: 1px solid oklch(var(--dialog-border-color, 78.94% 0 0));
     background-color: oklch(var(--dialog-header-bg, 99.4% 0 0));
     border-radius: 0 0 var(--radius, 0.25rem) var(--radius, 0.25rem);
-    ~.pi-card-container {
+    ~ .pi-card-container {
       border-radius: 0;
     }
   }
