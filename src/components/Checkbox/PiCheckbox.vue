@@ -9,6 +9,7 @@
       class="pi-checkbox-input"
       v-bind="$attrs"
       @change="onEvent('change')"
+      @focus="onEvent('focus')"
       @blur="onEvent('blur')"
     />
     <div class="pi-checkbox__inner">
@@ -34,10 +35,13 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['input', 'blur', 'change', 'update:modelValue'])
+const emit = defineEmits(['change', 'focus', 'blur', 'update:modelValue'])
 
 const fixId = ref('')
 
+/**
+ * * 綁定checkbox的checked，觸發父層value的更新
+ */
 const activeCheck = computed({
   get() {
     return props.modelValue.includes(props.value)
@@ -52,6 +56,9 @@ const activeCheck = computed({
   }
 })
 
+/**
+ * ? 取得父層的formItem
+ */
 const formItem = computed(() => {
   const self = getCurrentInstance()
   if (!self) return null
@@ -67,7 +74,10 @@ const formItem = computed(() => {
   return parent
 })
 
-const onEvent = (event: 'blur' | 'change') => {
+/**
+ * * 可觸發外層設定的change或blur事件
+ */
+const onEvent = (event: 'change' | 'focus' | 'blur') => {
   emit(event)
   nextTick(() => {
     if (formItem.value) formItem.value.emit(event)

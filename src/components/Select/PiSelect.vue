@@ -1,4 +1,6 @@
 <template>
+  
+  {{ selectedVal  }}
   <div ref="refPiSelect" :id="`${fixId}`" class="pi-select">
     <pi-button
       type="button"
@@ -14,32 +16,39 @@
       :class="['pi-select-btn', listboxOpen ? 'pi-select-btn--open' : '']"
       :a11y="a11y"
     >
+      <!-- 插槽:文字前綴 -->
       <slot name="prefix"></slot>
       <span class="visually-hidden">{{ t('select.hint') }}</span>
+      <!-- 無選項時顯示 "請選擇" -->
       <span
         v-if="selectedVal.length === 0"
         :id="`${fixId}-label-text`"
         class="pi-select-text pi-select-placeholder"
       >
-        <span v-if="placeholder">{{ placeholder }}</span>
-        <span v-else>{{ t('select.placeholder') }}</span>
+        <span>{{ placeholder ? placeholder : t('select.placeholder') }}</span>
       </span>
-      <span v-else-if="multiple !== undefined" class="pi-select-text multiple-label-group">
+      <!-- 多選選項 -->
+      <span v-else-if="multiple" class="pi-select-text multiple-label-group">
+        <!-- accordion顯示 第一個選項 +n -->
         <template v-if="multiple === 'accordion' && selectedVal.length > 1">
           <span class="multiple-label">{{ selectedVal[0].label }}</span>
           <span class="pi-badge">+{{ selectedVal.length - 1 }}</span>
         </template>
+        <!-- 正常顯示所有選項 -->
         <span v-else v-for="item in selectedVal" :key="item.value" class="multiple-label">
           {{ item.label }}
         </span>
       </span>
+      <!-- 單選選項 -->
       <span v-else :id="`${fixId}-label-text`" class="pi-select-text">
         {{ selectedVal[0].label }}
       </span>
+      <!-- 插槽:文字後綴 -->
       <slot name="affix"></slot>
+      <!-- 清除按鈕 -->
       <div
         role="button"
-        v-if="selectedVal.length > 0 && showClear == true"
+        v-if="selectedVal.length > 0 && clearable == true"
         tabindex="0"
         @click.stop="handleClearSelected"
         @keydown.enter.prevent.stop="handleClearSelected"
@@ -57,14 +66,16 @@
       tabindex="-1"
       :aria-labelledby="`${fixId}-label-text`"
       :aria-activedescendant="selectedId"
-      :aria-multiselectable="multiple !== undefined"
+      :aria-multiselectable="multiple !== false"
       :class="[
         'pi-select-popup',
         listboxOpen ? 'pi-select-popup--open' : '',
         listboxClass ? listboxClass : ''
       ]"
     >
+      <!-- toolbar功能 (search) -->
       <div v-if="toolbar" class="toolbar">
+        <!-- 選項搜尋框 -->
         <label :for="`${fixId}-search`">
           <pi-input
             v-model="searchInput"
@@ -97,7 +108,7 @@
               tabindex="0"
               :class="{
                 'option-checked': item.checked,
-                'option-multi-checked': multiple !== undefined
+                'option-multi-checked': multiple !== false
               }"
               :aria-selected="item.checked"
               @click.stop="handleClickOption(item, childIndex, index, true)"
@@ -117,7 +128,7 @@
           tabindex="0"
           :class="{
             'option-checked': item.checked,
-            'option-checked--multi': multiple !== undefined
+            'option-checked--multi': multiple !== false
           }"
           :aria-selected="item.checked"
           @click.stop="handleClickOption(item, index, false)"
@@ -142,7 +153,8 @@ import {
   nextTick,
   getCurrentInstance,
   inject,
-  Ref
+  Ref,
+  PropType
 } from 'vue'
 import useI18n from '@/locales/useI18n'
 import { generateId } from '@/utils/generateId'
@@ -190,14 +202,17 @@ const props = defineProps({
     required: true
   },
   modelValue: [String, Number, Array],
-  multiple: [String],
+  multiple: {
+    type: [Boolean, String] as PropType<boolean | 'accordion'>,
+    default: false
+  },
   placeholder: String,
-  showClear: {
+  clearable: {
     type: Boolean,
     default: false
   },
   disabled: Boolean,
-  toolbar: Array,
+  toolbar: Array as PropType<'search'[]>,
   optionWidth: String,
   size: String,
   listboxClass: String,
@@ -217,7 +232,7 @@ const refListbox = ref(null)
 const refSelectSearch = ref(null)
 const listboxOpen = ref(false)
 const selectedId = ref('')
-const fixId = ref(generateId())
+const fixId = ref('')
 const keyword = ref('')
 const searchInput = ref('')
 const trap = ref(null)
@@ -226,30 +241,39 @@ const debounce = reactive({
   wait: 800
 })
 
-// Value
-const selectedVal = computed({
+// * 選擇值
+const selectedVal = computed<{ label: string; value: string }[]>({
   get: () => {
-    if (props.multiple === undefined) {
-      let groupOpt: typeof Option | undefined
+    if (!props.multiple) {
+      // * 單選區塊
+      let groupOpt = undefined
+      if (Array.isArray(props.modelValue)) {
+        console.error('value should not be an array in single mode')
+      }
       const opt = props.options.find((o) => {
         if ((o as OptionGroup).type === 'group') {
           const found = (o as OptionGroup).options.find((subO) => subO.value === props.modelValue)
-          if (found) groupOpt = found
+          if (found) groupOpt = found // * 群組選項中的被選擇值
         } else {
-          return (o as Option).value === props.modelValue
+          return (o as Option).value === props.modelValue // * 非群組選項中的被選擇值
         }
       })
-
       return opt ? [opt] : groupOpt ? [groupOpt] : []
     } else {
+      // * 多選區塊
       let groupOpts: Option[] = []
+      if (!Array.isArray(props.modelValue)) {
+        console.error('value should be an array in multiple mode')
+      }
       const opt = props.options.filter((o) => {
         if ((o as OptionGroup).type === 'group' && Array.isArray(props.modelValue)) {
-          const found = (o as OptionGroup).options.filter((subO) =>
-            props.modelValue.includes(subO.value)
-          )
+          // * 群組選項中的被選擇值
+          const found = (o as OptionGroup).options.filter((subO) => {
+            return (props.modelValue as Array<string | number>).includes(subO.value)
+          })
           groupOpts = groupOpts.concat(found)
         } else if (Array.isArray(props.modelValue)) {
+          // * 非群組選項中的被選擇值
           return (props.modelValue as Array<string | number>).includes((o as Option).value)
         }
       })
@@ -257,6 +281,8 @@ const selectedVal = computed({
     }
   },
   set: (val) => {
+    console.log('val',val);
+    
     emit('update:modelValue', val)
     if (formItem.value) {
       nextTick(() => {
@@ -314,7 +340,7 @@ useClickOutside(refPiSelect, handleClickOutside)
 // Click Clear Button
 const handleClearSelected = () => {
   innerOptions.value.forEach((o) => (o.checked = false))
-  const val = props.multiple === undefined ? '' : []
+  const val = !props.multiple ? '' : []
   emit('update:modelValue', val)
   if (formItem.value) formItem.value.emit('change', val)
   selectedId.value = ''
@@ -331,7 +357,7 @@ const handleClickOption = (
   selectedId.value = group
     ? `${fixId.value}-optgroup-${parentIndex}-option-${index}`
     : `${fixId.value}-option-${index}`
-  if (props.multiple === undefined) {
+  if (!props.multiple) {
     close()
     selectedVal.value = item.value
   } else {
@@ -482,10 +508,8 @@ onMounted(() => {
   if (props.id) {
     fixId.value = 'pi-select-' + props.id
   } else {
-    fixId.value = 'pi-select-' + generateId() // 假設 generateId 是一個可用的函數
+    fixId.value = 'pi-select-' + generateId()
   }
-
-  const list: HTMLElement = refListbox.value as unknown as HTMLElement
 })
 
 onBeforeUnmount(() => {

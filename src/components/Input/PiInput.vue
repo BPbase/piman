@@ -121,11 +121,12 @@ const props = defineProps({
   accesskey: String
 })
 
+const self = getCurrentInstance()
 const focus = ref(false)
 const pwdVisible = ref(false)
 const checkTypePassword = ref(false)
 const emit = defineEmits(['update:modelValue', 'change', 'inputKeyup', 'blur'])
-const refPiInput = ref(null)
+const refPiInput = ref<HTMLInputElement | null>(null)
 
 onMounted(() => {
   if (props.type == 'password') {
@@ -139,7 +140,6 @@ const handleFocus = () => {
 
 const handleBlur = (event) => {
   focus.value = false
-  const self = getCurrentInstance()
   if (self) {
     self.emit('blur', event.target.value)
   }
@@ -147,32 +147,38 @@ const handleBlur = (event) => {
 
 const handleInput = (event) => {
   emit('update:modelValue', event.target.value)
-  const self = getCurrentInstance()
   if (self) {
     self.emit('change', event.target.value)
   }
 }
 
+/**
+ * * 清除輸入框內容
+ */
 const handleClearInput = () => {
   emit('update:modelValue', '')
   emit('change', '')
   if (formItem.value) {
     formItem.value.emit('change')
   }
-  const focusPiInput = refPiInput.value as unknown as HTMLInputElement
-  focusPiInput.focus()
+  if (refPiInput.value) {
+    refPiInput.value.focus()
+  }
 }
-
+/**
+ * * 密碼顯示/隱藏
+ */
 const handlePwdVisible = () => {
   pwdVisible.value = !pwdVisible.value
 }
 
+// ! 此function可棄用，鍵盤行為無需透過此function處理
 const handleKeyup = (event) => {
   emit('inputKeyup', event.target.value)
 }
 
+// ? 取得父層的formItem
 const formItem = computed(() => {
-  const self = getCurrentInstance()
   if (!self) return null
   let parent = self.parent
   if (!parent) return null

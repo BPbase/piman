@@ -28,7 +28,7 @@
           :pageSizeOptions="pageSizeOptions"
           not yet
         -->
-        <section>
+        <!-- <section>
           <h3>Size</h3>
           <pi-pagination
             :total="totalPages"
@@ -53,8 +53,8 @@
             :pageSize="pageSize"
             size="large"
           />
-        </section>
-        <section>
+        </section> -->
+        <!-- <section>
           <h3>Change Text</h3>
           <pi-pagination
             :total="totalPages"
@@ -68,8 +68,8 @@
             <template v-slot:next-page-text>往後</template>
             <template v-slot:last-page-text>最後</template>
           </pi-pagination>
-        </section>
-        <section>
+        </section> -->
+        <!-- <section>
           <h3>Change Pager Count</h3>
           <p>pagerCount & pageSize must same</p>
           <pi-pagination
@@ -79,7 +79,7 @@
             @change:page="onChangePage"
             :pageSize="3"
           />
-        </section>
+        </section> -->
         <section>
           <h3>Layout</h3>
           <p>:layout="['total_item', 'total_page', 'page_size', 'first', 'last', 'jump']"</p>
@@ -89,7 +89,7 @@
             :pager-count="pagerCount"
             @change:page="onChangePage"
             :pageSize="pageSize"
-            :layout="[]"
+            :layout="['page_size']"
           />
         </section>
       </section>

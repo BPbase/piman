@@ -25,7 +25,7 @@
       <p>id manually</p>
       <section>
         <h3>Size</h3>
-        <pi-input v-model="value" size="small" id="testId" />
+        <pi-input v-model="value" size="small" id="testId" @blur="onFocus" />
         <pi-input v-model="value" />
         <pi-input v-model="value" size="large" />
       </section>
@@ -75,4 +75,7 @@ import { ref } from 'vue'
 const value = ref('')
 
 const path = ref([{ title: '🏠首頁', url: '/' }, { title: 'Input' }])
+const onFocus = (e) => {
+  console.log('blur', e)
+}
 </script>

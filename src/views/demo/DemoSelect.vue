@@ -24,17 +24,21 @@
       <h2>Select</h2>
       <section>
         <h3>Size</h3>
-        <pi-select v-model="value" :options="options" size="small" listboxClass="aaa" />
-        <pi-select v-model="value" :options="options" />
-        <pi-select v-model="value" :options="options" size="large" />
+        <!-- <pi-select v-model="value" :options="options" size="small" listboxClass="aaa" /> -->
+        <pi-select v-model="value" :options="options" clearable />
+        <pi-select v-model="valueM" :options="options" multiple="accordion" clearable />
+        {{ value }}
+        {{ valueM }}
+        <!-- <pi-select v-model="valueM" :options="options" multiple :toolbar="['search']" /> -->
+        <!-- <pi-select v-model="value" :options="options" size="large" /> -->
       </section>
-      <section>
+      <!-- <section>
         <h3>Custom Placeholder</h3>
         <pi-select v-model="value" :options="options" placeholder="請點擊選擇" />
       </section>
       <section>
         <h3>Show Clear Button</h3>
-        <pi-select v-model="value" :options="options" placeholder="請點擊選擇" showClear />
+        <pi-select v-model="value" :options="options" placeholder="請點擊選擇" clearable />
       </section>
       <section>
         <h3>Prefix, Affix</h3>
@@ -78,8 +82,8 @@
         <pi-select v-model="value" :options="options" theme="success-ghost" a11y />
         <pi-select v-model="value" :options="options" theme="warning-ghost" a11y />
         <pi-select v-model="value" :options="options" theme="danger-ghost" a11y />
-      </section>
-      <section>
+      </section> -->
+      <!-- <section>
         <h3>Disabled</h3>
         <pi-select v-model="value" :options="options" disabled />
         <pi-select v-model="value" :options="options" theme="primary" disabled />
@@ -122,7 +126,7 @@
       <section>
         <h3>Simple Search(Filter)</h3>
         <pi-select v-model="valueM" :options="options" multiple :toolbar="['search']" />
-      </section>
+      </section> -->
     </div>
   </div>
 </template>

@@ -15,7 +15,7 @@
         v-if="layout.includes('page_size')"
         class="pi-pagination-info pi-pagination-info--pagesize"
       >
-        <!-- <pi-select
+        <pi-select
           v-model="syncPageSize"
           class="page-size-select"
           :options="pageSizeOptions"
@@ -29,7 +29,7 @@
           <template v-slot:affix>
             <span class="affix">{{ t('pagination.result') }}</span>
           </template>
-        </pi-select> -->
+        </pi-select>
       </div>
     </div>
     <div class="pi-pagination-group__item">
