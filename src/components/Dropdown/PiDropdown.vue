@@ -12,11 +12,11 @@
       :size="size"
       @click="handleClickSelect"
       :class="['pi-dropdown-btn', listboxOpen ? 'pi-dropdown-btn--open' : '']"
+      :a11y="a11y"
     >
       <slot name="prefix"></slot>
       <span class="pi-dropdown-text" :id="`${fixId}-label-text`">
-        <span v-if="showLabel"> {{ showLabel }}</span>
-        <span :class="`placeholder-${theme}`" v-else-if="placeholder">{{ placeholder }}</span>
+        <span :class="`placeholder-${theme}`" v-if="placeholder">{{ placeholder }}</span>
         <span :class="`placeholder-${theme}`" v-else>{{ t('dropdown.placeholder') }}</span>
         <span class="visually-hidden">{{ t('dropdown.hint') }}</span>
       </span>
@@ -99,7 +99,8 @@ const props = defineProps({
   listboxClass: {
     type: String,
     default: ''
-  }
+  },
+  a11y: Boolean
 })
 const emit = defineEmits(['click'])
 const refPiDropdown = ref(null)
@@ -149,6 +150,7 @@ onMounted(() => {
 .pi-dropdown {
   position: relative;
 }
+
 .pi-dropdown-btn {
   position: relative;
   width: 100%;
@@ -157,9 +159,6 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  .placeholder-default {
-    color: oklch(var(--color-gray-600));
-  }
   &:after {
     content: '';
     display: block;
@@ -172,91 +171,67 @@ onMounted(() => {
     transform: rotate(45deg);
     transition: transform 160ms ease-in;
   }
-  .pi-dropdown-text {
-    display: block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    flex: 1 0 0%;
-    .pi-badge {
-      margin-left: 0.25rem;
-    }
-  }
   img {
     max-height: 1.5rem;
   }
   &.pi-btn--small {
     padding-right: 2.5rem;
-    img {
+    & img {
       max-height: 1rem;
     }
   }
   &.pi-btn--large {
     padding-right: 2.5rem;
   }
-  .pi-dropdown-clear-btn {
-    font-size: 0.875rem;
-    color: darken(oklch(var(--color-gray-100)), 20%);
-    border-radius: 50%;
-    transition: opacity 160ms ease-in;
-    &:hover {
-      opacity: 0.8;
-    }
-    &:active {
-      opacity: 1;
-    }
-    &:focus {
-      box-shadow: inset 0 0 0 3px oklch(var(--color-focus));
-    }
-  }
   &.pi-dropdown-btn--open {
-    [data-icon='chevron-down'] {
-      transform: rotate3d(0, 0, 1, -180deg);
-    }
-
-    &::after {
+    &:after {
       top: calc(50% - 4px);
       transform: rotate(225deg);
     }
   }
-  &[class*='pi-btn--'] {
-    .pi-dropdown-clear-btn {
-      color: oklch(var(--color-white));
-    }
-  }
-  &[class*='-ghost'] {
-    .pi-dropdown-clear-btn {
-      color: darken(oklch(var(--color-gray-100)), 20%);
-    }
+}
+
+.pi-dropdown-text {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1 0 0%;
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    flex: auto;
   }
 }
+
 .pi-dropdown-popup {
   display: none;
   position: absolute;
-  padding: 0.5rem 0;
+  padding: var(--spacing-xs) 0;
   width: 100%;
   min-width: 8rem;
-  background-color: oklch(var(--color-white));
-  border: 1px solid oklch(var(--color-black, 13.98% 0 0));
-  border-radius: 0.25rem;
+  background-color: oklch(var(--popover-content-bg));
+  border: 1px solid oklch(var(--color-border));
+  border-radius: var(--radius);
   box-shadow: var(--box-shadow);
+  max-height: 50vh;
+  overflow: auto;
+  z-index: 1;
   [role='option'] {
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    color: oklch(var(--color-black));
+    padding: var(--spacing-xs) var(--spacing-m);
+    color: oklch(var(--popover-content-color));
     transition: background-color 160ms ease-in;
     &:hover {
       background-color: oklch(var(--color-gray-100));
     }
     &:active {
-      background-color: oklch(var(--color-gray-100));
+      background-color: oklch(var(--color-gray-200));
     }
     &:focus {
-      background-color: oklch(var(--color-gray-100));
+      background-color: oklch(var(--color-gray-200));
     }
     a {
       margin: -0.5rem -1rem;
-      padding: 0.5rem 1rem;
+      padding: var(--spacing-xs) var(--spacing-m);
       display: block;
       color: oklch(var(--color-black));
       &:hover {
@@ -264,18 +239,17 @@ onMounted(() => {
         opacity: 1;
       }
       &:active {
-        background-color: oklch(var(--color-gray-100));
+        background-color: oklch(var(--color-gray-200));
       }
       &:focus {
         outline: auto;
-        outline-color: oklch(var(--color-gray-100));
+        outline-color: -webkit-focus-ring-color;
         background-color: oklch(var(--color-gray-100));
       }
     }
   }
   &.pi-dropdown-popup--open {
     display: block;
-    z-index: 999;
   }
 }
 </style>

@@ -77,7 +77,7 @@ onMounted(() => {
 
 <style scoped>
 .pi-switch {
-  & button {
+  button {
     padding: var(--spacing-xxs);
     border-radius: var(--radius);
     display: flex;

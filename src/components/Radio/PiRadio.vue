@@ -77,7 +77,7 @@ onMounted(() => {
   margin-right: var(--spacing-m);
   margin-bottom: var(--spacing-xs);
   display: inline-block;
-  & .pi-radio__inner {
+  .pi-radio__inner {
     display: inline-block;
     padding-left: var(--spacing-l);
     color: oklch(var(--radio-label-color));

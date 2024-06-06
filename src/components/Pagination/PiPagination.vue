@@ -1,35 +1,30 @@
 <template>
   <div class="pi-pagination-group">
     <div class="pi-pagination-group__item">
-      <div
-        v-if="layout.includes('total_item') || layout.includes('total_page')"
-        class="pi-pagination-info"
-      >
-        {{ t('pagination.total') }}
-        <span v-if="layout.includes('total_page')"
-          >{{ totalPages }} {{ t('pagination.page') }}&nbsp;</span
-        >
-        <span v-if="layout.includes('total_item')">{{ total }} {{ t('pagination.result') }}</span>
-      </div>
-      <div
-        v-if="layout.includes('page_size')"
-        class="pi-pagination-info pi-pagination-info--pagesize"
-      >
-        <!-- <pi-select
-          v-model="syncPageSize"
-          class="page-size-select"
-          :options="pageSizeOptions"
-          disabledClear
-          :size="size"
-          @input="handleChangePageSize"
-        >
-          <template v-slot:prefix>
-            <span class="prefix">{{ t('pagination.per') }}</span>
-          </template>
-          <template v-slot:affix>
-            <span class="affix">{{ t('pagination.result') }}</span>
-          </template>
-        </pi-select> -->
+      <div class="pi-pagination-info">
+        <div v-if="layout.includes('total_item') || layout.includes('total_page')">
+          {{ t('pagination.total') }}
+          <span v-if="layout.includes('total_page')"
+            >{{ totalPages }} {{ t('pagination.page') }}&nbsp;</span
+          >
+          <span v-if="layout.includes('total_item')">{{ total }} {{ t('pagination.result') }}</span>
+        </div>
+        <div v-if="layout.includes('page_size')">
+          <pi-select
+            v-model="syncPageSize"
+            :options="pageSizeOptions"
+            class="page-size-select"
+            :size="size"
+            disabledClear
+          >
+            <template v-slot:prefix>
+              <span class="prefix">{{ t('pagination.per') }}</span>
+            </template>
+            <template v-slot:affix>
+              <span class="affix">{{ t('pagination.result') }}</span>
+            </template>
+          </pi-select>
+        </div>
       </div>
     </div>
     <div class="pi-pagination-group__item">
@@ -135,7 +130,7 @@
 import { generateId } from '@/utils/generateId'
 import { ref, onMounted, computed, watch } from 'vue'
 import useI18n from '@/locales/useI18n'
-
+import PiMsg from '@/components/Msg/PiMsg'
 const props = defineProps({
   total: { type: Number, required: true },
   currentPage: { type: Number, required: true },
@@ -162,14 +157,7 @@ const props = defineProps({
 const { t } = useI18n()
 const goPagesId = ref('')
 const syncCurrentPage = ref(props.currentPage)
-const syncPageSize = computed({
-  get() {
-    return props.pageSize
-  },
-  set(newValue: number) {
-    return newValue
-  }
-})
+const syncPageSize = ref<number>(props.pageSize)
 const totalPages = computed(() => Math.ceil(props.total / syncPageSize.value))
 const prevPage = computed(() => props.currentPage - 1)
 const nextPage = computed(() => props.currentPage + 1)
@@ -187,24 +175,19 @@ const pagers = computed(() => {
   return pagers
 })
 
-// const handleChangePageSize = (pageSize) => {
-//   emit('change:pageSize', pageSize)
-// };
-
 const emit = defineEmits(['update:currentPage', 'sync-page-param', 'change:page'])
 
-const handleClickPager = (page) => {
+const handleClickPager = (page: number) => {
   if (page > 0 && page <= totalPages.value) {
     syncCurrentPage.value = page
     emit('update:currentPage', Number(page))
     emit('sync-page-param', { currentPage: Number(page) })
     emit('change:page', Number(page))
+  } else {
+    PiMsg({
+      msg: t('pagination.exceed')
+    })
   }
-  // else {
-  //   PiMsg({
-  //     msg: t('pagination.exceed'),
-  //   });
-  // }
 }
 
 watch(syncCurrentPage, (newPage) => {
@@ -244,6 +227,7 @@ onMounted(() => {
   & ul {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
     & li {
       &:not(.current) {
         @media screen and (width <= 768px) {
@@ -262,5 +246,11 @@ onMounted(() => {
     min-width: 3rem;
     text-align: center;
   }
+}
+.pi-pagination-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
 }
 </style>

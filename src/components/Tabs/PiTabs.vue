@@ -17,7 +17,7 @@
           :aria-selected="tab.name === modelValue ? true : false"
           :class="[tab.name === modelValue ? 'pi-btn--primary' : '']"
           @click="handleClickTab(tab.name, index)"
-          @keydown="handleKeyboardEvent($event)"
+          @keydown.prevent="handleKeyboardEvent($event)"
         >
           <span v-if="tab.prefix" :class="['tab-prefix', tab.prefix]"></span>
           <span>{{ tab.label }}</span>
@@ -105,7 +105,7 @@ const toKebabCase = (value: string) => {
 
 <style scoped>
 .pi-tabs {
-  & .pi-tabs-list {
+  .pi-tabs-list {
     display: block;
     width: 100%;
     white-space: nowrap;
@@ -145,7 +145,7 @@ const toKebabCase = (value: string) => {
       z-index: 1;
     }
   }
-  & .pi-tabs-panels {
+  .pi-tabs-panels {
     border: 1px solid oklch(var(--color-border));
     margin-top: -1px;
     border-radius: var(--radius);

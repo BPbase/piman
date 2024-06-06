@@ -32,19 +32,19 @@ defineProps({
 <style scoped>
 .pi-btn {
   cursor: pointer;
-  padding: var(--spacing-s, 0.75rem) var(--spacing-m, 1rem);
-  color: oklch(var(--button-default-color, 13.98% 0 0));
-  background-color: oklch(var(--button-default-bg, 99.4% 0 0));
+  padding: var(--spacing-s) var(--spacing-m);
+  color: oklch(var(--button-default-color));
+  background-color: oklch(var(--button-default-bg));
   font-size: 1rem;
   line-height: 1.5;
-  border: 1px solid oklch(var(--color-border, 78.94% 0 0));
-  border-radius: var(--radius, 0.25rem);
+  border: 1px solid oklch(var(--color-border));
+  border-radius: var(--radius);
   transition: background-color 160ms ease-in;
   &:hover {
-    background-color: oklch(var(--button-default-hover-bg, 94.66% 0 0));
+    background-color: oklch(var(--button-default-hover-bg));
   }
   &:active {
-    background-color: oklch(var(--button-default-active-bg, 86.89% 0 0));
+    background-color: oklch(var(--button-default-active-bg));
   }
   &:disabled {
     cursor: not-allowed;
@@ -52,7 +52,7 @@ defineProps({
     opacity: 0.4;
   }
   &.pi-btn--small {
-    padding: var(--spacing-xxs, 0.25rem) var(--spacing-xs, 0.5rem);
+    padding: var(--spacing-xxs) var(--spacing-xs);
     font-size: 1rem;
     & .pi-btn-loading {
       vertical-align: baseline;
@@ -65,7 +65,7 @@ defineProps({
     }
   }
   &.pi-btn--large {
-    padding: var(--spacing-m, 1rem) var(--spacing-xl, 2rem);
+    padding: var(--spacing-m, 1rem) var(--spacing-xl);
     font-size: 1.25rem;
     .pi-btn-loading {
       vertical-align: baseline;
@@ -520,21 +520,21 @@ defineProps({
     }
   }
   &:has(~ .pi-btn) {
-    margin-right: var(--spacing-m, 1rem);
-    margin-top: var(--spacing-xs, 0.5rem);
-    margin-bottom: var(--spacing-xs, 0.5rem);
+    margin-right: var(--spacing-m);
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
   }
 }
 
 :deep(.pi-badge) {
   position: relative;
   top: -1px;
-  padding: var(--spacing-xxxs, 0.125rem) var(--spacing-xxs, 0.25rem);
-  margin-left: var(--spacing-xxs, 0.25rem);
+  padding: var(--spacing-xxxs) var(--spacing-xxs);
+  margin-left: var(--spacing-xxs);
   line-height: 1.125;
   border-radius: 1rem;
-  background-color: oklch(var(--color-badge-bg, 86.98% 0.128 81.2));
-  color: oklch(var(--color-badge-color, 86.98% 0.128 81.2));
+  background-color: oklch(var(--color-badge-bg));
+  color: oklch(var(--color-badge-color));
   font-size: 0.75rem;
 }
 
@@ -551,8 +551,8 @@ defineProps({
     width: 1rem;
     height: 1rem;
     margin: 0.125rem;
-    border: 0.125rem solid oklch(var(--color-border, 78.94% 0 0));
-    border-color: oklch(var(--color-border, 78.94% 0 0)) transparent transparent transparent;
+    border: 0.125rem solid oklch(var(--color-border));
+    border-color: oklch(var(--color-border)) transparent transparent transparent;
     border-radius: 50%;
     animation: btn-loading-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     &:nth-child(1) {

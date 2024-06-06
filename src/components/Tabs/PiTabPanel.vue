@@ -29,16 +29,15 @@ const props = defineProps({
     required: true
   },
   affixIcon: String,
-  badge: {
-    type: String || Number
-  },
+  badge: [String, Number],
   nopadding: Boolean
 })
 
+const instance = getCurrentInstance()
+
 const showPanel = computed(() => {
-  const self = getCurrentInstance()
-  if (!self || !self.parent) return false
-  return props.name === self.parent.props.modelValue
+  if (!instance || !instance.parent) return false
+  return props.name === (instance.parent as any).props.modelValue
 })
 </script>
 
@@ -47,6 +46,9 @@ const showPanel = computed(() => {
   padding: var(--spacing-m);
   &:focus-within {
     outline: 3px solid oklch(var(--color-focus));
+  }
+  &.no-padding {
+    padding: 0;
   }
 }
 </style>

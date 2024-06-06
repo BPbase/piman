@@ -40,18 +40,140 @@
           <pi-dropdown v-model="value" :options="options" theme="warning-ghost" @click="onClick" />
           <pi-dropdown v-model="value" :options="options" theme="danger" @click="onClick" />
           <pi-dropdown v-model="value" :options="options" theme="danger-ghost" @click="onClick" />
+          <pi-dropdown v-model="value" :options="options" theme="primary" @click="onClick" a11y />
+          <pi-dropdown
+            v-model="value"
+            :options="options"
+            theme="primary-ghost"
+            @click="onClick"
+            a11y
+          />
+          <pi-dropdown v-model="value" :options="options" theme="success" @click="onClick" a11y />
+          <pi-dropdown
+            v-model="value"
+            :options="options"
+            theme="success-ghost"
+            @click="onClick"
+            a11y
+          />
+          <pi-dropdown v-model="value" :options="options" theme="warning" @click="onClick" a11y />
+          <pi-dropdown
+            v-model="value"
+            :options="options"
+            theme="warning-ghost"
+            @click="onClick"
+            a11y
+          />
+          <pi-dropdown v-model="value" :options="options" theme="danger" @click="onClick" a11y />
+          <pi-dropdown
+            v-model="value"
+            :options="options"
+            theme="danger-ghost"
+            @click="onClick"
+            a11y
+          />
         </div>
         <br />
         <h3>提示</h3>
         <pi-dropdown v-model="value" placeholder="請選擇" :options="options2" @click="onClick" />
         <br />
         <h3>禁用</h3>
+        <pi-dropdown v-model="value" disabled :options="options2" @click="onClick" />
+        <pi-dropdown v-model="value" :options="options" theme="primary" @click="onClick" disabled />
         <pi-dropdown
           v-model="value"
-          placeholder="please choose"
-          disabled
-          :options="options2"
+          :options="options"
+          theme="primary-ghost"
           @click="onClick"
+          disabled
+        />
+        <pi-dropdown v-model="value" :options="options" theme="success" @click="onClick" disabled />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="success-ghost"
+          @click="onClick"
+          disabled
+        />
+        <pi-dropdown v-model="value" :options="options" theme="warning" @click="onClick" disabled />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="warning-ghost"
+          @click="onClick"
+          disabled
+        />
+        <pi-dropdown v-model="value" :options="options" theme="danger" @click="onClick" disabled />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="danger-ghost"
+          @click="onClick"
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="primary"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="primary-ghost"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="success"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="success-ghost"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="warning"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="warning-ghost"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="danger"
+          @click="onClick"
+          a11y
+          disabled
+        />
+        <pi-dropdown
+          v-model="value"
+          :options="options"
+          theme="danger-ghost"
+          @click="onClick"
+          a11y
+          disabled
         />
         <br />
         <h3>前綴與後綴</h3>
@@ -61,6 +183,15 @@
           </template>
           <template #affix>
             <div>😆after</div>
+          </template>
+        </pi-dropdown>
+        <br />
+        <pi-dropdown v-model="value" placeholder="請選擇" :options="options" @click="onClick">
+          <template v-slot:prefix>
+            <img src="/favicon.ico" alt="" />
+          </template>
+          <template v-slot:affix>
+            <img src="/favicon.ico" alt="" />
           </template>
         </pi-dropdown>
         <br />
@@ -77,7 +208,7 @@
         <pi-dropdown
           v-model="value"
           placeholder="option width"
-          optionWidth="100px"
+          optionWidth="300px"
           :options="options2"
           @click="onClick"
         />
