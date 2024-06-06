@@ -1,48 +1,112 @@
 <template>
   <div id="app">
-    <pi-button
-      theme="primary"
-      class="mobile-menu"
-      @click="handleMobileMenuOpen"
-    >
+    <pi-button theme="primary" class="mobile-menu" @click="handleMobileMenuOpen">
       <span v-if="mobileMenuOpen">關閉選單</span>
       <span v-else>展開選單</span>
     </pi-button>
     <router-link to="#ak-container" title="跳至主要內容" id="ak-jump">跳至主要內容</router-link>
     <h1 class="visually-hidden">Piman 無障礙前端 UI 框架 Vue3版</h1>
-    <aside
-      :class="[
-        mobileMenuOpen ? 'open' : ''
-      ]"
-    >
-      <router-link to="#ak-nav" title="選單區塊" id="ak-nav" accesskey="N" name="ak-nav">:::</router-link>
+    <aside :class="[mobileMenuOpen ? 'open' : '']">
+      <router-link to="#ak-nav" title="選單區塊" id="ak-nav" accesskey="N" name="ak-nav"
+        >:::</router-link
+      >
       <div class="aside-block">
         <router-link to="/" class="logo" title="Logo">
-          <img src="/logo-white.svg" alt="Piman Logo">
+          <img src="/logo-white.svg" alt="Piman Logo" />
           <div>無障礙前端 UI 框架</div>
         </router-link>
       </div>
       <div class="aside-block">
         <nav class="menu" aria-label="元件選單">
           <ul>
-            <li><router-link to="/accordion" class="label" @click="mobileMenuOpen=false">Accordion</router-link></li>
-            <li><router-link to="/breadcrumb" class="label" @click="mobileMenuOpen=false">Breadcrumb</router-link></li>
-            <li><router-link to="/button" class="label" @click="mobileMenuOpen=false">Button</router-link></li>
-            <li><router-link to="/card" class="label" @click="mobileMenuOpen=false">Card</router-link></li>
-            <li><router-link to="/checkbox" class="label" @click="mobileMenuOpen=false">Checkbox</router-link></li>
-            <li><router-link to="/dialog" class="label" @click="mobileMenuOpen=false">Dialog</router-link></li>
-            <li><router-link to="/dropdown" class="label" @click="mobileMenuOpen=false">Dropdown</router-link></li>
-            <li><router-link to="/formvalidate" class="label" @click="mobileMenuOpen=false">Form</router-link></li>
-            <li><router-link to="/input" class="label" @click="mobileMenuOpen=false">Input</router-link></li>
-            <li><router-link to="/msg" class="label" @click="mobileMenuOpen=false">Msg</router-link></li>
-            <li><router-link to="/pagination" class="label" @click="mobileMenuOpen=false">Pagination</router-link></li>
-            <li><router-link to="/popover" class="label" @click="mobileMenuOpen=false">Popover</router-link></li>
-            <li><router-link to="/radio" class="label" @click="mobileMenuOpen=false">Radio</router-link></li>
-            <li><router-link to="/select" class="label" @click="mobileMenuOpen=false">Select</router-link></li>
-            <li><router-link to="/switch" class="label" @click="mobileMenuOpen=false">Switch</router-link></li>
-            <li> <router-link to="/tabs" class="label" @click="mobileMenuOpen=false">Tabs</router-link></li>
-            <li><router-link to="/tooltip" class="label" @click="mobileMenuOpen=false">Tooltip</router-link></li>
-            <li><router-link to="/tree" class="label" @click="mobileMenuOpen=false">Tree</router-link></li>
+            <li>
+              <router-link to="/accordion" class="label" @click="mobileMenuOpen = false"
+                >Accordion</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/breadcrumb" class="label" @click="mobileMenuOpen = false"
+                >Breadcrumb</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/button" class="label" @click="mobileMenuOpen = false"
+                >Button</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/card" class="label" @click="mobileMenuOpen = false"
+                >Card</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/checkbox" class="label" @click="mobileMenuOpen = false"
+                >Checkbox</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/dialog" class="label" @click="mobileMenuOpen = false"
+                >Dialog</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/dropdown" class="label" @click="mobileMenuOpen = false"
+                >Dropdown</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/formvalidate" class="label" @click="mobileMenuOpen = false"
+                >Form</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/input" class="label" @click="mobileMenuOpen = false"
+                >Input</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/msg" class="label" @click="mobileMenuOpen = false">Msg</router-link>
+            </li>
+            <li>
+              <router-link to="/pagination" class="label" @click="mobileMenuOpen = false"
+                >Pagination</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/popover" class="label" @click="mobileMenuOpen = false"
+                >Popover</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/radio" class="label" @click="mobileMenuOpen = false"
+                >Radio</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/select" class="label" @click="mobileMenuOpen = false"
+                >Select</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/switch" class="label" @click="mobileMenuOpen = false"
+                >Switch</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/tabs" class="label" @click="mobileMenuOpen = false"
+                >Tabs</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/tooltip" class="label" @click="mobileMenuOpen = false"
+                >Tooltip</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/tree" class="label" @click="mobileMenuOpen = false"
+                >Tree</router-link
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -51,12 +115,28 @@
           <div class="aside-group">Coding</div>
           <ul>
             <li>
-              <a href="https://github.com/bpbase/piman" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Github" @click="mobileMenuOpen=false">Github</a>
+              <a
+                href="https://github.com/bpbase/piman"
+                class="label"
+                target="_blank"
+                rel="noreferrer noopener"
+                title="open new window to Github"
+                @click="mobileMenuOpen = false"
+                >Github</a
+              >
             </li>
           </ul>
           <ul>
             <li>
-              <a href="https://bpio.gitbook.io/piman/" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Docs" @click="mobileMenuOpen=false">Docs</a>
+              <a
+                href="https://bpio.gitbook.io/piman/"
+                class="label"
+                target="_blank"
+                rel="noreferrer noopener"
+                title="open new window to Docs"
+                @click="mobileMenuOpen = false"
+                >Docs</a
+              >
             </li>
           </ul>
         </nav>
@@ -66,16 +146,48 @@
           <div class="aside-group">Levels</div>
           <pi-accordion>
             <pi-accordion-item title="Level 1">
-              <a href="https://bpio.gitbook.io/piman/" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Docs" @click="mobileMenuOpen=false">Level 2</a>
-              <a href="https://bpio.gitbook.io/piman/" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Docs" @click="mobileMenuOpen=false">Level 2</a>
-              <a href="https://bpio.gitbook.io/piman/" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Docs" @click="mobileMenuOpen=false">Level 2</a>
+              <a
+                href="https://bpio.gitbook.io/piman/"
+                class="label"
+                target="_blank"
+                rel="noreferrer noopener"
+                title="open new window to Docs"
+                @click="mobileMenuOpen = false"
+                >Level 2</a
+              >
+              <a
+                href="https://bpio.gitbook.io/piman/"
+                class="label"
+                target="_blank"
+                rel="noreferrer noopener"
+                title="open new window to Docs"
+                @click="mobileMenuOpen = false"
+                >Level 2</a
+              >
+              <a
+                href="https://bpio.gitbook.io/piman/"
+                class="label"
+                target="_blank"
+                rel="noreferrer noopener"
+                title="open new window to Docs"
+                @click="mobileMenuOpen = false"
+                >Level 2</a
+              >
             </pi-accordion-item>
           </pi-accordion>
           <pi-accordion>
             <pi-accordion-item title="Level 1">
               <pi-accordion>
                 <pi-accordion-item title="Level 2">
-                  <a href="https://bpio.gitbook.io/piman/" class="label" target="_blank" rel="noreferrer noopener" title="open new window to Docs" @click="mobileMenuOpen=false">Level 3</a>
+                  <a
+                    href="https://bpio.gitbook.io/piman/"
+                    class="label"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    title="open new window to Docs"
+                    @click="mobileMenuOpen = false"
+                    >Level 3</a
+                  >
                 </pi-accordion-item>
               </pi-accordion>
             </pi-accordion-item>
@@ -90,10 +202,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 const mobileMenuOpen = ref(false)
 const handleMobileMenuOpen = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value;
+  mobileMenuOpen.value = !mobileMenuOpen.value
 }
 </script>
 
@@ -157,7 +269,7 @@ svg {
 }
 aside {
   position: sticky;
-  top: 0;;
+  top: 0;
   width: 260px;
   height: 100vh;
   word-break: break-word;
@@ -183,7 +295,7 @@ aside {
   a {
     color: white;
     &:visited {
-      color: #FFBB00;
+      color: #ffbb00;
     }
   }
   &.open {
@@ -204,26 +316,24 @@ aside {
     padding-right: 0;
   }
   .pi-accordion__item {
-    --color-border: transparent!important;
+    --color-border: transparent !important;
     --accordion-icon-color: var(--color-white);
     --accordion-bar-color: var(--color-focus);
   }
   .pi-accordion__item-header {
     --accordion-header-color: var(--color-white);
     button {
-      padding-left: 1.5rem!important;
-      background: none!important;
-      
+      padding-left: 1.5rem !important;
+      background: none !important;
     }
   }
   .pi-accordion__item-container {
-    --accordion-content-bg: transparent!important;
-    padding: 0 0 0 1.5rem!important;
+    --accordion-content-bg: transparent !important;
+    padding: 0 0 0 1.5rem !important;
     @media screen and (width <= 768px) {
-      padding: 0!important;
+      padding: 0 !important;
     }
   }
-  
 }
 .menu {
   ul {
@@ -233,7 +343,6 @@ aside {
   }
   li {
     @media screen and (width <= 768px) {
-     
     }
   }
   .label {
@@ -249,7 +358,7 @@ aside {
     &[aria-current] {
       background-color: #020202;
     }
-    &+ul {
+    & + ul {
       margin: 0;
       margin-left: 1rem;
     }
@@ -316,7 +425,7 @@ main {
   a {
     color: white;
     &:visited {
-      color: #FFBB00;
+      color: #ffbb00;
     }
   }
   .pi-breadcrumb__item {

@@ -1,47 +1,48 @@
-
 export default class FocusTrap {
   /** 可 focus 的所有元素組 */
-  private _focusList: Array<HTMLElement[]> = [];
+  private _focusList: Array<HTMLElement[]> = []
   /** 用於暫存查出的可 focus 元素 */
-  private _tempFocusList: HTMLElement[] = [];
+  private _tempFocusList: HTMLElement[] = []
   /** 目標元素前後的跳板清單 */
   private _platformList: HTMLDivElement[] = []
   /** 提供的目標元素 */
-  private _targets: HTMLElement[];
+  private _targets: HTMLElement[]
 
   /**
    * 將 targets 內可 focus 的 HTML 元素找出，並將 focus 目標限制在這些元素之中
    * @param targets target element array to trap
    * @param firstFocus the first element to focus on
    */
-  constructor(targets: HTMLElement[], firstFocus?: HTMLElement){
-    if(!targets) console.error(`[FocusTrap Fail]: FocusTrap需要一個參數作為目標，請提供製作focus範圍的目標元素`);
-    
+  constructor(targets: HTMLElement[], firstFocus?: HTMLElement) {
+    if (!targets)
+      console.error(
+        `[FocusTrap Fail]: FocusTrap需要一個參數作為目標，請提供製作focus範圍的目標元素`
+      )
+
     this._targets = targets
     //取得能focus的元素清單focus list
     for (let i = 0; i < this._targets.length; i++) {
-      const t = this._targets[i];
-      if(this._isFocusable(t)) this._tempFocusList.push(t)
-      if(t.childNodes.length > 0) this._findAllFocus(t.childNodes)
-      if(this._tempFocusList.length > 0) this._focusList.push(this._tempFocusList)
+      const t = this._targets[i]
+      if (this._isFocusable(t)) this._tempFocusList.push(t)
+      if (t.childNodes.length > 0) this._findAllFocus(t.childNodes)
+      if (this._tempFocusList.length > 0) this._focusList.push(this._tempFocusList)
       this._tempFocusList = []
     }
 
-
-    if(this._focusList.length === 0) console.warn(`[FocusTrap Warn]: 目標元素內沒有可focus的元素，您提供的目標元素為：`, targets);
-    else{
+    if (this._focusList.length === 0)
+      console.warn(`[FocusTrap Warn]: 目標元素內沒有可focus的元素，您提供的目標元素為：`, targets)
+    else {
       //抓好focus list後才能加入focus跳板
       for (let i = 0; i < this._targets.length; i++) {
-        const t = this._targets[i];
+        const t = this._targets[i]
         const platforms = this._wrapPlatform(t, i)
         this._platformList = this._platformList.concat(platforms)
-        
       }
       try {
-        if(firstFocus) firstFocus.focus()
+        if (firstFocus) firstFocus.focus()
         else this._focusList[0][0].focus()
       } catch (error) {
-        console.warn(`[FocusTrap Warn]: 發生下列錯誤，可能影響程式執行：`, (error as any).message);
+        console.warn(`[FocusTrap Warn]: 發生下列錯誤，可能影響程式執行：`, (error as any).message)
       }
     }
   }
@@ -55,22 +56,22 @@ export default class FocusTrap {
   private _wrapPlatform = (target: Element, idx: number): [HTMLDivElement, HTMLDivElement] => {
     const l = this._focusList.length
 
-    const preDiv = document.createElement('div');
+    const preDiv = document.createElement('div')
     preDiv.style.position = 'fixed'
-    const preNode = target.parentNode!.insertBefore( preDiv, target );
-    preNode.tabIndex = 0;
+    const preNode = target.parentNode!.insertBefore(preDiv, target)
+    preNode.tabIndex = 0
     preNode.addEventListener('focus', () => {
-      if(idx -1 < 0) this._focusList[l-1][this._focusList[l-1].length-1].focus()
-      else this._focusList[idx-1][this._focusList[idx-1].length-1].focus()
+      if (idx - 1 < 0) this._focusList[l - 1][this._focusList[l - 1].length - 1].focus()
+      else this._focusList[idx - 1][this._focusList[idx - 1].length - 1].focus()
     })
-    
-    const postDiv = document.createElement('div');
+
+    const postDiv = document.createElement('div')
     postDiv.style.position = 'fixed'
-    const postNode = target.parentNode!.insertBefore( postDiv, target.nextSibling );
-    postNode.tabIndex = 0;
+    const postNode = target.parentNode!.insertBefore(postDiv, target.nextSibling)
+    postNode.tabIndex = 0
     postNode.addEventListener('focus', () => {
-      if(idx+1 >= l) this._focusList[0][0].focus()
-      else this._focusList[l-1][0].focus()
+      if (idx + 1 >= l) this._focusList[0][0].focus()
+      else this._focusList[l - 1][0].focus()
     })
 
     return [preNode, postNode]
@@ -79,8 +80,10 @@ export default class FocusTrap {
   /**
    * 清除 focus 範圍限制
    */
-  dismiss(): void{
-    this._platformList.forEach(p => { p.parentNode!.removeChild(p) })
+  dismiss(): void {
+    this._platformList.forEach((p) => {
+      p.parentNode!.removeChild(p)
+    })
   }
 
   /**
@@ -89,10 +92,10 @@ export default class FocusTrap {
    */
   private _findAllFocus = (targets: NodeListOf<ChildNode>) => {
     for (let i = 0; i < targets.length; i++) {
-      const el = targets[i];
-      if(this._isFocusable(el)) this._tempFocusList.push(el as HTMLElement)
+      const el = targets[i]
+      if (this._isFocusable(el)) this._tempFocusList.push(el as HTMLElement)
 
-      if(el.childNodes.length > 0) this._findAllFocus(el.childNodes)
+      if (el.childNodes.length > 0) this._findAllFocus(el.childNodes)
     }
   }
 
@@ -101,26 +104,30 @@ export default class FocusTrap {
    * @param el 元素
    * @returns true - 可 focus; false - 不可 focus
    */
-  private _isFocusable(el: any): boolean{
-    if ( 
-      el.tabIndex < 0 || 
-      el.disabled || 
+  private _isFocusable(el: any): boolean {
+    if (
+      el.tabIndex < 0 ||
+      el.disabled ||
       (el.style && (el.style.visibility === 'hidden' || el.style.display === 'none'))
-    ) { return false; }
-  
-    if (el.tabIndex >= 0) { return true }
-  
+    ) {
+      return false
+    }
+
+    if (el.tabIndex >= 0) {
+      return true
+    }
+
     switch (el.nodeName) {
       case 'A':
-        return !!el.href && el.rel != 'ignore';
+        return !!el.href && el.rel != 'ignore'
       case 'INPUT':
-        return el.type != 'hidden';
+        return el.type != 'hidden'
       case 'BUTTON':
       case 'SELECT':
       case 'TEXTAREA':
-        return true;
+        return true
       default:
-        return false;
+        return false
     }
   }
 }
@@ -130,36 +137,40 @@ export function findAllFocus(targets: NodeListOf<ChildNode>): HTMLElement[] {
   find(targets)
 
   return list
-  
-  function find(nodes: NodeListOf<ChildNode>){
+
+  function find(nodes: NodeListOf<ChildNode>) {
     for (let i = 0; i < nodes.length; i++) {
-      const el = nodes[i];
-      if(_isFocusable(el)) list.push(el as HTMLElement)
-  
-      if(el.childNodes.length > 0) find(el.childNodes)
+      const el = nodes[i]
+      if (_isFocusable(el)) list.push(el as HTMLElement)
+
+      if (el.childNodes.length > 0) find(el.childNodes)
     }
   }
 
-  function _isFocusable(el: any): boolean{
-    if ( 
-      el.tabIndex < 0 || 
-      el.disabled || 
+  function _isFocusable(el: any): boolean {
+    if (
+      el.tabIndex < 0 ||
+      el.disabled ||
       (el.style && (el.style.visibility === 'hidden' || el.style.display === 'none'))
-    ) { return false; }
-  
-    if (el.tabIndex >= 0) { return true }
-  
+    ) {
+      return false
+    }
+
+    if (el.tabIndex >= 0) {
+      return true
+    }
+
     switch (el.nodeName) {
       case 'A':
-        return !!el.href && el.rel != 'ignore';
+        return !!el.href && el.rel != 'ignore'
       case 'INPUT':
-        return el.type != 'hidden';
+        return el.type != 'hidden'
       case 'BUTTON':
       case 'SELECT':
       case 'TEXTAREA':
-        return true;
+        return true
       default:
-        return false;
+        return false
     }
   }
 }

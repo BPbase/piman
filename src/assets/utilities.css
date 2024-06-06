@@ -18,17 +18,17 @@ a {
     outline: none;
     box-shadow: 0 0 0 3px oklch(var(--color-focus));
   }
-  &[role="button"] {
+  &[role='button'] {
     text-decoration: none;
-    &[target="_blank"] {
+    &[target='_blank'] {
       &:after {
         display: none;
       }
     }
   }
-  &[target="_blank"] {
+  &[target='_blank'] {
     &:after {
-      content: "\2197";
+      content: '\2197';
     }
   }
 }
@@ -44,13 +44,12 @@ textarea {
   resize: vertical;
 }
 
-
 /*************************
   Single Class
 *************************/
 
 .no-padding {
-  padding: 0!important;
+  padding: 0 !important;
 }
 
 .visually-hidden {
@@ -59,7 +58,7 @@ textarea {
   height: 1px !important;
   padding: 0 !important;
   /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
-  margin: -1px !important; 
+  margin: -1px !important;
   overflow: hidden !important;
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;

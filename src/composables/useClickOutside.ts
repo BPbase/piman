@@ -2,16 +2,12 @@
 
 import { onMounted, onBeforeUnmount } from 'vue'
 
-export default function useClickOutside(
-  component,
-  callback,
-  excludeComponent?: Element
-) {
+export default function useClickOutside(component, callback, excludeComponent?: Element) {
   // fail early if any of the required params is missing
   if (!component) {
     throw new Error('A target component has to be provided.')
   }
-  
+
   if (!callback) {
     throw new Error('A callback has to be provided.')
   }
@@ -31,11 +27,11 @@ export default function useClickOutside(
   }
   onMounted(() => {
     window.addEventListener('click', listener)
-    window.addEventListener('touchstart', listener);
+    window.addEventListener('touchstart', listener)
   })
 
   onBeforeUnmount(() => {
     window.removeEventListener('click', listener)
-    window.removeEventListener('touchstart', listener);
+    window.removeEventListener('touchstart', listener)
   })
 }
