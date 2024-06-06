@@ -23,11 +23,6 @@
       >
       <h2>Pagination</h2>
       <section>
-        <!-- 
-          @change:pageSize="onChangeSize" 
-          :pageSizeOptions="pageSizeOptions"
-          not yet
-        -->
         <section>
           <h3>Size</h3>
           <pi-pagination
@@ -35,22 +30,30 @@
             v-model:current-page="currentPage"
             :pager-count="pagerCount"
             @change:page="onChangePage"
+            @change:pageSize="onChangeSize"
             :pageSize="pageSize"
+            :pageSizeOptions="pageSizeOptions"
             size="small"
           />
+          <br />
           <pi-pagination
             :total="totalPages"
             v-model:current-page="currentPage"
             :pager-count="pagerCount"
             @change:page="onChangePage"
+            @change:pageSize="onChangeSize"
             :pageSize="pageSize"
+            :pageSizeOptions="pageSizeOptions"
           />
+          <br />
           <pi-pagination
             :total="totalPages"
             v-model:current-page="currentPage"
             :pager-count="pagerCount"
             @change:page="onChangePage"
+            @change:pageSize="onChangeSize"
             :pageSize="pageSize"
+            :pageSizeOptions="pageSizeOptions"
             size="large"
           />
         </section>
@@ -61,24 +64,15 @@
             v-model:current-page="currentPage"
             :pager-count="pagerCount"
             @change:page="onChangePage"
+            @change:pageSize="onChangeSize"
             :pageSize="pageSize"
+            :pageSizeOptions="pageSizeOptions"
           >
             <template v-slot:first-page-text>最前</template>
             <template v-slot:prev-page-text>往前</template>
             <template v-slot:next-page-text>往後</template>
             <template v-slot:last-page-text>最後</template>
           </pi-pagination>
-        </section>
-        <section>
-          <h3>Change Pager Count</h3>
-          <p>pagerCount & pageSize must same</p>
-          <pi-pagination
-            :total="totalPages"
-            v-model:current-page="currentPage"
-            :pager-count="3"
-            @change:page="onChangePage"
-            :pageSize="3"
-          />
         </section>
         <section>
           <h3>Layout</h3>
@@ -88,7 +82,9 @@
             v-model:current-page="currentPage"
             :pager-count="pagerCount"
             @change:page="onChangePage"
+            @change:pageSize="onChangeSize"
             :pageSize="pageSize"
+            :pageSizeOptions="pageSizeOptions"
             :layout="[]"
           />
         </section>
@@ -103,21 +99,21 @@ import { ref } from 'vue'
 const totalPages = ref(100)
 const currentPage = ref(2)
 const pagerCount = ref(5)
-// const pageSizeOptions = [
-//   { label: '3', value: 3 },
-//   { label: '18', value: 18 }
-// ]
-const pageSize = ref(5)
+const pageSizeOptions = [
+  { label: '6', value: 6 },
+  { label: '18', value: 18 }
+]
+const pageSize = ref(6)
 
 const onChangePage = (page: number) => {
   console.log('turn to ', page)
 }
 
-// const onChangeSize= (size: number) => {
-//   pageSize.value = size
-//   currentPage.value = 1
-//   console.log('expand to ', size);
-// }
+const onChangeSize = (size: number) => {
+  pageSize.value = size
+  currentPage.value = 1
+  console.log('expand to ', size)
+}
 
 const path = ref([{ title: '🏠首頁', url: '/' }, { title: 'Pagination' }])
 </script>
