@@ -1,12 +1,13 @@
 {
   "name": "piman",
-  "description": "Piman is an open-source accessibility UI framework.",
+  "description": "Piman is an open-source accessibility UI framework(Vue3).",
   "author": "Blue Planet Inc.",
   "version": "0.0.1",
   "keywords": [
     "accessibility",
     "a11y",
     "web accessibility",
+    "digital accessible",
     "CSS framework",
     "UI framework",
     "Vue",
