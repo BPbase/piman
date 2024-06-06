@@ -26,34 +26,34 @@ defineProps({
 
 <style scoped>
 .pi-card {
-  border: 1px solid oklch(var(--dialog-border-color, 78.94% 0 0));
-  border-radius: var(--radius, 0.25rem);
+  border: 1px solid oklch(var(--dialog-border-color));
+  border-radius: var(--radius);
   .pi-card-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-xs, 0.5rem) var(--spacing-m, 1rem);
-    border-bottom: 1px solid oklch(var(--dialog-border-color, 78.94% 0 0));
-    background-color: oklch(var(--dialog-header-bg, 99.4% 0 0));
-    border-radius: var(--radius, 0.25rem) var(--radius, 0.25rem) 0 0;
+    padding: var(--spacing-xs) var(--spacing-m);
+    border-bottom: 1px solid oklch(var(--dialog-border-color));
+    background-color: oklch(var(--dialog-header-bg));
+    border-radius: var(--radius) var(--radius) 0 0;
   }
   .pi-card-container {
     padding: var(--spacing-m, 1rem);
-    background-color: oklch(var(--dialog-content-bg, 99.4% 0 0));
+    background-color: oklch(var(--dialog-content-bg));
     word-break: break-all;
     word-break: break-word;
-    border-radius: var(--radius, 0.25rem);
+    border-radius: var(--radius);
   }
   .pi-card-footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    padding: var(--spacing-xs, 0.5rem) var(--spacing-m, 1rem);
-    border-top: 1px solid oklch(var(--dialog-border-color, 78.94% 0 0));
-    background-color: oklch(var(--dialog-header-bg, 99.4% 0 0));
-    border-radius: 0 0 var(--radius, 0.25rem) var(--radius, 0.25rem);
+    padding: var(--spacing-xs) var(--spacing-m);
+    border-top: 1px solid oklch(var(--dialog-border-color));
+    background-color: oklch(var(--dialog-header-bg));
+    border-radius: 0 0 var(--radius) var(--radius);
     ~ .pi-card-container {
       border-radius: 0;
     }

@@ -531,9 +531,6 @@ onBeforeUnmount(() => {
     padding-right: 2.5rem;
   }
   &.pi-select-btn--open {
-    /* & [data-icon="chevron-down"] {
-      transform: rotate3d(0, 0, 1, -180deg);
-    } */
     &:after {
       top: calc(50% - 4px);
       transform: rotate(225deg);
@@ -600,7 +597,7 @@ onBeforeUnmount(() => {
   max-height: 50vh;
   overflow: auto;
   z-index: 1;
-  & .toolbar {
+  .toolbar {
     padding: var(--spacing-xs) var(--spacing-m) var(--spacing-m);
     display: flex;
     border-bottom: 1px solid oklch(var(--color-border));
@@ -614,7 +611,7 @@ onBeforeUnmount(() => {
   [role='group'] {
     position: relative;
   }
-  & .optgroup-title {
+  .optgroup-title {
     position: sticky;
     top: -0.5rem;
     z-index: 1;
@@ -639,7 +636,7 @@ onBeforeUnmount(() => {
     &:focus {
       background-color: oklch(var(--color-gray-200));
     }
-    & a {
+    a {
       margin: -0.5rem -1rem;
       padding: var(--spacing-xs) var(--spacing-m);
       display: block;

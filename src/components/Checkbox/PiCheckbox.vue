@@ -83,15 +83,15 @@ onMounted(() => {
 .pi-checkbox-label {
   position: relative;
   font-size: 1rem;
-  margin-right: var(--spacing-m, 1rem);
-  margin-bottom: var(--spacing-xs, 0.5rem);
+  margin-right: var(--spacing-m);
+  margin-bottom: var(--spacing-xs);
   display: inline-block;
   vertical-align: top;
   .pi-checkbox__inner {
     display: inline-block;
     vertical-align: top;
-    padding-left: var(--spacing-l, 1.5rem);
-    color: oklch(var(--checkbox-label-color, 24.84% 0 0));
+    padding-left: var(--spacing-l);
+    color: oklch(var(--checkbox-label-color));
     line-height: 1.5;
     &:before {
       content: '';
@@ -106,7 +106,7 @@ onMounted(() => {
       transition: opacity 120ms ease-in;
       @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         display: none;
-        border-color: oklch(var(--color-black, 13.98% 0 0));
+        border-color: oklch(var(--color-black));
       }
     }
     &:after {
@@ -123,17 +123,17 @@ onMounted(() => {
       );
       @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         display: none;
-        border-color: oklch(var(--color-black, 13.98% 0 0));
+        border-color: oklch(var(--color-black));
       }
     }
     &:hover {
-      color: oklch(var(--checkbox-label-hover-color, 46.28% 0.156 255.66));
+      color: oklch(var(--checkbox-label-hover-color));
     }
     &:active {
-      color: oklch(var(--checkbox-label-active-color, 46.28% 0.156 255.66));
+      color: oklch(var(--checkbox-label-active-color));
     }
     &:focus {
-      color: oklch(var(--checkbox-label-focus-color, 46.28% 0.156 255.66));
+      color: oklch(var(--checkbox-label-focus-color));
     }
     &.pi-checkbox-input--indeterminate {
       &:after {
@@ -156,24 +156,20 @@ onMounted(() => {
   left: 0;
   width: 1.125rem;
   height: 1.125rem;
-  background-color: oklch(var(--checkbox-square-bg, 99.4% 0 0));
-  border: 1px solid oklch(var(--checkbox-square-border-color, 44.64% 0 0));
-  border-radius: var(--radius, 0.25rem);
+  background-color: oklch(var(--checkbox-square-bg));
+  border: 1px solid oklch(var(--checkbox-square-border-color));
+  border-radius: var(--radius);
   transition:
     background-color 160ms ease-in,
     border-color 160ms ease-in,
     box-shadow 160ms ease-in;
   &:hover {
-    color: oklch(var(--checkbox-label-hover-color, 46.28% 0.156 255.66));
-    border-color: oklch(
-      var(--checkbox-square-hover-border-color, 55.86% 0.1907218934980594 256.0020354109037)
-    );
+    color: oklch(var(--checkbox-label-hover-color));
+    border-color: oklch(var(--checkbox-square-hover-border-color));
   }
   &:active {
-    color: oklch(var(--checkbox-label-active-color, 46.28% 0.156 255.66));
-    background-color: oklch(
-      var(--checkbox-square-active-bg, 86.08% 0.07184533104304036 248.67189806368867)
-    );
+    color: oklch(var(--checkbox-label-active-color));
+    background-color: oklch(var(--checkbox-square-active-bg));
   }
   &:checked + .pi-checkbox__inner {
     &:before {
@@ -182,7 +178,7 @@ onMounted(() => {
   }
   &:focus-within {
     outline: none;
-    box-shadow: 0 0 0 3px oklch(var(--color-focus, 83.15% 0.15681888825079074 78.05241467152487));
+    box-shadow: 0 0 0 3px oklch(var(--color-focus));
   }
 }
 </style>

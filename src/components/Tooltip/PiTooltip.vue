@@ -188,7 +188,7 @@ onBeforeUnmount(() => {
   border-radius: var(--spacing-xxs);
   transition: opacity 0.3s;
   line-height: 1.5;
-  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.75rem 1.125rem rgba(0, 0, 0, 0.15);
   pointer-events: none;
   opacity: 0;
   &:hover {
@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
     opacity: 1;
     pointer-events: inherit;
   }
-  &::before {
+  &:before {
     content: '';
     position: absolute;
     width: 100%;
@@ -208,7 +208,7 @@ onBeforeUnmount(() => {
     top: -0.5rem;
     left: 50%;
   }
-  &::after {
+  &:after {
     content: '';
     position: absolute;
     width: 0;

@@ -61,7 +61,7 @@ onMounted(() => {
 
 <style scoped>
 .pi-accordion__item {
-  border-bottom: 1px solid oklch(var(--color-border, 78.94% 0 0));
+  border-bottom: 1px solid oklch(var(--color-border));
   word-break: break-all;
   word-break: break-word;
 }
@@ -72,8 +72,7 @@ onMounted(() => {
     position: relative;
     display: block;
     width: 100%;
-    padding: var(--spacing-m, 1rem) var(--spacing-xxl, 4rem) var(--spacing-m, 1rem)
-      var(--spacing-m, 1rem);
+    padding: var(--spacing-m) var(--spacing-xxl) var(--spacing-m) var(--spacing-m);
     font-size: 1.125rem;
     font-weight: bold;
     display: flex;
@@ -81,8 +80,8 @@ onMounted(() => {
     line-height: 1.5rem;
     word-break: break-all;
     word-break: break-word;
-    color: oklch(var(--accordion-header-color, 24.84% 0 0));
-    background: oklch(var(--accordion-header-bg, 99.4% 0 0));
+    color: oklch(var(--accordion-header-color));
+    background: oklch(var(--accordion-header-bg));
     border: none;
     > div {
       width: 100%;
@@ -94,7 +93,7 @@ onMounted(() => {
       left: 0;
       width: 5px;
       height: 0;
-      background-color: oklch(var(--accordion-bar-color, 46.28% 0.156 255.66));
+      background-color: oklch(var(--accordion-bar-color));
       transition:
         height 160ms ease-in,
         background-color 160ms ease-in;
@@ -104,7 +103,7 @@ onMounted(() => {
       display: block;
       position: absolute;
       border-width: 0 0.1875rem 0.1875rem 0;
-      border-color: oklch(var(--accordion-icon-color, 46.28% 0.156 255.66));
+      border-color: oklch(var(--accordion-icon-color));
       width: 0.625rem;
       height: 0.625rem;
       right: 1.25rem;
@@ -120,12 +119,11 @@ onMounted(() => {
     }
     &:active {
       &:before {
-        background-color: oklch(var(--accordion-active-bar-color, 55.89% 0.119 72.49));
+        background-color: oklch(var(--accordion-active-bar-color));
       }
     }
     &:focus {
-      box-shadow: inset 0 0 0 3px
-        oklch(var(--color-focus, 83.15% 0.15681888825079074 78.05241467152487));
+      box-shadow: inset 0 0 0 3px oklch(var(--color-focus));
       @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         &:before {
           height: 100%;
@@ -143,8 +141,8 @@ onMounted(() => {
 
 .pi-accordion__item-container {
   padding: var(--spacing-m);
-  background-color: oklch(var(--accordion-content-bg, 94.66% 0 0));
-  color: oklch(var(--accordion-content-color, 44.64% 0 0));
+  background-color: oklch(var(--accordion-content-bg));
+  color: oklch(var(--accordion-content-color));
   line-height: 1.5rem;
   word-break: break-all;
   word-break: break-word;

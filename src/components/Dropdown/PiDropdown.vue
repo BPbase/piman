@@ -171,7 +171,7 @@ onMounted(() => {
     transform: rotate(45deg);
     transition: transform 160ms ease-in;
   }
-  & img {
+  img {
     max-height: 1.5rem;
   }
   &.pi-btn--small {
@@ -229,7 +229,7 @@ onMounted(() => {
     &:focus {
       background-color: oklch(var(--color-gray-200));
     }
-    & a {
+    a {
       margin: -0.5rem -1rem;
       padding: var(--spacing-xs) var(--spacing-m);
       display: block;
