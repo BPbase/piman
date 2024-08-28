@@ -23,12 +23,12 @@ const props = defineProps({
     type: String,
     required: true
   },
-  prefixIcon: String,
+  prefix: String,
   label: {
     type: String,
     required: true
   },
-  affixIcon: String,
+  affix: String,
   badge: [String, Number],
   nopadding: Boolean
 })
